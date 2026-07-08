@@ -51,6 +51,51 @@ stockflow/
 └── .github/workflows/ # CI/CD
 ```
 
+## Frontend Structure
+```
+frontend/
+├── app/
+│   ├── (auth)/
+│   │   ├── login/
+│   │   │   └── page.tsx
+│   │   └── signup/
+│   │       └── page.tsx
+│   ├── dashboard/
+│   │   ├── inventory/
+│   │   │   └── page.tsx
+│   │   ├── orders/
+│   │   │   └── page.tsx
+│   │   ├── products/
+│   │   │   └── page.tsx
+│   │   ├── reports/
+│   │   │   └── page.tsx
+│   │   ├── settings/
+│   │   │   └── page.tsx
+│   │   ├── suppliers/
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── not-found.tsx
+├── components/
+│   ├── dashboard/
+│   ├── inventory/
+│   ├── layout/
+│   ├── orders/
+│   ├── suppliers/
+│   └── ui/
+├── hooks/
+├── lib/
+├── public/
+├── types/
+├── .env.local
+├── next.config.js
+├── package.json
+├── tailwind.config.ts
+└── tsconfig.json
+```
+
 ## Getting Started
 
 ### Prerequisites
