@@ -16,10 +16,19 @@ def create_app(env=None):
     jwt.init_app(app)
     ma.init_app(app)
     cors.init_app(app, resources={r"/api/*": {"origins": app.config["CORS_ORIGINS"]}}, supports_credentials=True)
-    socketio.init_app(app, cors_allowed_origins=app.config["CORS_ORIGINS"])
 
     if env != "testing":
         init_redis(app)
+    else:
+        app.redis_client = None
+
+    # Only use Redis as the Socket.IO message queue if it's actually
+    # reachable; otherwise fall back to local in-process delivery (fine for
+    # a single dev worker, degrades gracefully instead of crashing on emit).
+    socketio_kwargs = {"cors_allowed_origins": app.config["CORS_ORIGINS"]}
+    if app.redis_client is not None:
+        socketio_kwargs["message_queue"] = app.config["REDIS_URL"]
+    socketio.init_app(app, **socketio_kwargs)
 
     @jwt.unauthorized_loader
     def _missing_token(reason):
@@ -34,6 +43,7 @@ def create_app(env=None):
         return jsonify(error="Session expired. Please log in again."), 401
 
     from app import models  # noqa: F401 -- registers models with SQLAlchemy metadata
+    from app.sockets import alerts  # noqa: F401 -- registers socketio event handlers
     from app.routes.auth import auth_bp
     from app.routes.categories import categories_bp
     from app.routes.customers import customers_bp

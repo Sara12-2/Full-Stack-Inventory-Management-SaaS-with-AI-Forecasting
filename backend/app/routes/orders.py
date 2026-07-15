@@ -5,6 +5,7 @@ from marshmallow import ValidationError
 from app.extensions import db
 from app.models import Customer, Order, OrderItem, Product
 from app.schemas.order_schema import OrderCreateSchema, OrderStatusSchema
+from app.services.alert_service import emit_low_stock_alert, emit_new_order_alert
 from app.utils.errors import first_error
 
 orders_bp = Blueprint("orders", __name__)
@@ -84,6 +85,14 @@ def create_order():
         product.stock_quantity -= qty
 
     db.session.commit()
+
+    emit_new_order_alert(order)
+    for product, qty in line_items:
+        was_low = (product.stock_quantity + qty) <= product.low_stock_threshold
+        is_low = product.stock_quantity <= product.low_stock_threshold
+        if is_low and not was_low:
+            emit_low_stock_alert(product)
+
     return jsonify(order.to_dict()), 201
 
 
