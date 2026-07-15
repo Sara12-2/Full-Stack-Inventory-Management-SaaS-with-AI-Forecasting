@@ -37,7 +37,11 @@ export default function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      <div className="pointer-events-none fixed right-4 top-4 z-[100] flex w-full max-w-sm flex-col gap-2">
+      <div
+        role="status"
+        aria-live="polite"
+        className="pointer-events-none fixed right-4 top-4 z-[100] flex w-full max-w-sm flex-col gap-2"
+      >
         <AnimatePresence>
           {toasts.map((t) => {
             const { icon: Icon, iconClass } = config[t.type];
@@ -48,9 +52,9 @@ export default function ToastProvider({ children }: { children: ReactNode }) {
                 transition={{ duration: 0.15 }}
                 className="pointer-events-auto flex items-start gap-3 rounded-lg border border-border bg-card px-4 py-3 shadow-sm dark:border-border-dark dark:bg-card-dark dark:shadow-sm-dark"
               >
-                <Icon className={`mt-0.5 h-4 w-4 shrink-0 ${iconClass}`} />
+                <Icon aria-hidden="true" className={`mt-0.5 h-4 w-4 shrink-0 ${iconClass}`} />
                 <p className="flex-1 text-sm text-text-primary dark:text-text-primary-dark">{t.message}</p>
-                <button onClick={() => dismiss(t.id)} className="shrink-0 text-text-secondary hover:text-text-primary dark:text-text-secondary-dark">
+                <button onClick={() => dismiss(t.id)} aria-label="Dismiss notification" className="shrink-0 text-text-secondary hover:text-text-primary dark:text-text-secondary-dark">
                   <X className="h-3.5 w-3.5" />
                 </button>
               </motion.div>

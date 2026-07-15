@@ -1,22 +1,35 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getProducts } from "@/lib/mock-api";
 import { Product, MovementType } from "@/types/product";
 import DataTable, { Column } from "@/components/shared/DataTable";
 import StockBadge from "@/components/inventory/StockBadge";
 import StockAdjustModal from "@/components/inventory/StockAdjustModal";
 import SearchInput from "@/components/shared/SearchInput";
-import { Settings2 } from "lucide-react";
+import Skeleton from "@/components/ui/Skeleton";
+import EmptyState from "@/components/ui/EmptyState";
+import { Settings2, AlertTriangle } from "lucide-react";
 
 export default function InventoryPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState("");
   const [adjusting, setAdjusting] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const load = useCallback(() => {
+    setLoading(true);
+    setError(null);
+    getProducts()
+      .then(setProducts)
+      .catch(() => setError("Couldn't load inventory. Please try again."))
+      .finally(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
-    getProducts().then(setProducts);
-  }, []);
+    load();
+  }, [load]);
 
   const filtered = products.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
 
@@ -32,14 +45,14 @@ export default function InventoryPage() {
   };
 
   const columns: Column<Product>[] = [
-    { header: "Name", accessor: (p) => <span className="font-medium text-gray-800">{p.name}</span> },
+    { header: "Name", accessor: (p) => <span className="font-medium text-text-primary dark:text-text-primary-dark">{p.name}</span> },
     { header: "SKU", accessor: (p) => p.sku },
     { header: "Stock", accessor: (p) => <StockBadge product={p} /> },
     { header: "Threshold", accessor: (p) => p.low_stock_threshold },
     {
       header: "Actions",
       accessor: (p) => (
-        <button onClick={() => setAdjusting(p)} className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-gray-900">
+        <button onClick={() => setAdjusting(p)} className="flex items-center gap-1 text-xs font-medium text-text-secondary hover:text-text-primary dark:text-text-secondary-dark dark:hover:text-text-primary-dark">
           <Settings2 className="h-3.5 w-3.5" /> Adjust
         </button>
       ),
@@ -48,9 +61,18 @@ export default function InventoryPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-bold text-gray-900">Inventory</h1>
+      <h1 className="text-xl font-bold text-text-primary dark:text-text-primary-dark">Inventory</h1>
       <SearchInput value={search} onChange={setSearch} placeholder="Search products..." />
-      <DataTable columns={columns} data={filtered} keyExtractor={(p) => p.id} emptyMessage="No products found." />
+
+      {loading ? (
+        <div className="space-y-2">
+          {[...Array(5)].map((_, i) => <Skeleton key={i} className="h-12 w-full" />)}
+        </div>
+      ) : error ? (
+        <EmptyState icon={AlertTriangle} title="Something went wrong" description={error} actionLabel="Retry" onAction={load} />
+      ) : (
+        <DataTable columns={columns} data={filtered} keyExtractor={(p) => p.id} emptyMessage="No products found." />
+      )}
 
       <StockAdjustModal
         open={!!adjusting}

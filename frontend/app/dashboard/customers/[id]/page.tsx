@@ -1,23 +1,43 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, AlertTriangle, UserX } from "lucide-react";
 import { getCustomer } from "@/lib/mock-api";
 import { Customer } from "@/types/customer";
+import EmptyState from "@/components/ui/EmptyState";
 import { formatCurrency, formatDate } from "@/lib/utils";
 
 export default function CustomerDetailPage() {
   const params = useParams();
   const router = useRouter();
   const [customer, setCustomer] = useState<Customer | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    getCustomer(Number(params.id)).then(setCustomer);
+  const load = useCallback(() => {
+    setLoading(true);
+    setError(null);
+    getCustomer(Number(params.id))
+      .then(setCustomer)
+      .catch(() => setError("Couldn't load this customer. Please try again."))
+      .finally(() => setLoading(false));
   }, [params.id]);
 
-  if (!customer) {
+  useEffect(() => {
+    load();
+  }, [load]);
+
+  if (loading) {
     return <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" /></div>;
+  }
+
+  if (error) {
+    return <EmptyState icon={AlertTriangle} title="Something went wrong" description={error} actionLabel="Retry" onAction={load} />;
+  }
+
+  if (!customer) {
+    return <EmptyState icon={UserX} title="Customer not found" description="This customer may have been removed." actionLabel="Back to customers" onAction={() => router.push("/dashboard/customers")} />;
   }
 
   return (

@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Plus, Search } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { Plus, Search, AlertTriangle } from "lucide-react";
 import ProductTable from "@/components/products/ProductTable";
 import ProductForm from "@/components/products/ProductForm";
 import ConfirmDialog from "@/components/shared/ConfirmDialog";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Skeleton from "@/components/ui/Skeleton";
+import EmptyState from "@/components/ui/EmptyState";
 import { getProducts, getCategories, getSuppliers } from "@/lib/mock-api";
 import { Product } from "@/types/product";
 import { Category } from "@/types/category";
@@ -24,12 +25,20 @@ export default function ProductsPage() {
   const [editing, setEditing] = useState<Product | null>(null);
   const [deleting, setDeleting] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const load = useCallback(() => {
+    setLoading(true);
+    setError(null);
     Promise.all([getProducts(), getCategories(), getSuppliers()])
       .then(([p, c, s]) => { setProducts(p); setCategories(c); setSuppliers(s); })
+      .catch(() => setError("Couldn't load products. Please try again."))
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    load();
+  }, [load]);
 
   const filtered = products.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()) || p.sku.toLowerCase().includes(search.toLowerCase()));
 
@@ -74,6 +83,8 @@ export default function ProductsPage() {
         <div className="space-y-2">
           {[...Array(5)].map((_, i) => <Skeleton key={i} className="h-12 w-full" />)}
         </div>
+      ) : error ? (
+        <EmptyState icon={AlertTriangle} title="Something went wrong" description={error} actionLabel="Retry" onAction={load} />
       ) : (
         <ProductTable
           products={filtered}

@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Plus } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { Plus, AlertTriangle } from "lucide-react";
 import SearchInput from "@/components/shared/SearchInput";
 import SupplierTable from "@/components/suppliers/SupplierTable";
 import SupplierForm from "@/components/suppliers/SupplierForm";
 import ConfirmDialog from "@/components/shared/ConfirmDialog";
+import Skeleton from "@/components/ui/Skeleton";
+import EmptyState from "@/components/ui/EmptyState";
 import { getSuppliers } from "@/lib/mock-api";
 import { Supplier } from "@/types/supplier";
 
@@ -15,10 +17,21 @@ export default function SuppliersPage() {
   const [formOpen, setFormOpen] = useState(false);
   const [editing, setEditing] = useState<Supplier | null>(null);
   const [deleting, setDeleting] = useState<Supplier | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const load = useCallback(() => {
+    setLoading(true);
+    setError(null);
+    getSuppliers()
+      .then(setSuppliers)
+      .catch(() => setError("Couldn't load suppliers. Please try again."))
+      .finally(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
-    getSuppliers().then(setSuppliers);
-  }, []);
+    load();
+  }, [load]);
 
   const filtered = suppliers.filter((s) => s.name.toLowerCase().includes(search.toLowerCase()));
 
@@ -45,17 +58,26 @@ export default function SuppliersPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-gray-900">Suppliers</h1>
+        <h1 className="text-xl font-bold text-text-primary dark:text-text-primary-dark">Suppliers</h1>
         <button
           onClick={() => { setEditing(null); setFormOpen(true); }}
-          className="flex items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
+          className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
         >
           <Plus className="h-4 w-4" /> Add Supplier
         </button>
       </div>
 
       <SearchInput value={search} onChange={setSearch} placeholder="Search suppliers..." />
-      <SupplierTable suppliers={filtered} onEdit={(s) => { setEditing(s); setFormOpen(true); }} onDelete={setDeleting} />
+
+      {loading ? (
+        <div className="space-y-2">
+          {[...Array(5)].map((_, i) => <Skeleton key={i} className="h-12 w-full" />)}
+        </div>
+      ) : error ? (
+        <EmptyState icon={AlertTriangle} title="Something went wrong" description={error} actionLabel="Retry" onAction={load} />
+      ) : (
+        <SupplierTable suppliers={filtered} onEdit={(s) => { setEditing(s); setFormOpen(true); }} onDelete={setDeleting} />
+      )}
 
       <SupplierForm
         open={formOpen}
