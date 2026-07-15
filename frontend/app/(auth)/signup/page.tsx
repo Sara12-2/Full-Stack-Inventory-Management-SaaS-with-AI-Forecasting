@@ -1,86 +1,75 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Warehouse, User, Mail, Lock, Loader2 } from "lucide-react";
-import { saveToken } from "@/lib/auth";
-import { useToast } from "@/components/providers/ToastProvider";
+import { isAuthenticated } from "@/lib/auth";
+import SignupForm from "@/components/auth/SignupForm";
 
 export default function SignupPage() {
   const router = useRouter();
-  const { showToast } = useToast();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name || !email || !password) {
-      showToast("error", "Please fill in all fields.");
-      return;
-    }
-    setLoading(true);
-    try {
-      // Phase 1 stub — swap for lib/api.signup() once the backend exists.
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      saveToken("mock-token");
-      showToast("success", "Account created — welcome to StockFlow!");
+  useEffect(() => {
+    if (isAuthenticated()) {
       router.push("/dashboard");
-    } catch {
-      showToast("error", "Couldn't create your account. Please try again.");
-    } finally {
-      setLoading(false);
+    } else {
+      setIsChecking(false);
     }
-  };
+  }, [router]);
+
+  if (isChecking) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#0D9479] border-t-transparent" />
+      </div>
+    );
+  }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-surface p-8 dark:bg-surface-dark">
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="w-full max-w-sm">
-        <div className="mb-8 flex items-center justify-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary shadow-sm">
-            <Warehouse className="h-4.5 w-4.5 text-white" />
+    <div className="flex min-h-screen">
+      {/* Left Panel - Brand */}
+      <div className="hidden w-1/2 flex-col justify-between bg-gradient-to-br from-[#0D9479] to-[#0A7A63] p-12 lg:flex">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
+            <span className="text-xl font-bold text-white">SF</span>
           </div>
-          <span className="text-lg font-bold text-text-primary dark:text-text-primary-dark">StockFlow</span>
+          <span className="text-xl font-bold text-white">StockFlow</span>
         </div>
-        <h2 className="text-center text-2xl font-bold text-text-primary dark:text-text-primary-dark">Create your account</h2>
-        <p className="mt-1 text-center text-sm text-text-secondary dark:text-text-secondary-dark">Start managing your inventory today</p>
 
-        <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-text-primary dark:text-text-primary-dark">Name</label>
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-secondary dark:text-text-secondary-dark" />
-              <input value={name} onChange={(e) => setName(e.target.value)} className="w-full rounded-lg border border-border bg-white py-2.5 pl-9 pr-3 text-sm text-text-primary outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(79,70,229,0.1)] dark:border-border-dark dark:bg-card-dark dark:text-text-primary-dark" />
+        <div className="max-w-md space-y-4">
+          <h1 className="text-3xl font-bold leading-tight text-white">
+            Start managing your
+            <br />
+            <span className="text-white/80">inventory today.</span>
+          </h1>
+          <p className="text-white/70">
+            Join 500+ businesses already using StockFlow to track stock,
+            manage orders, and grow their business.
+          </p>
+          <div className="flex items-center gap-4 pt-4">
+            <div className="flex -space-x-2">
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="h-8 w-8 rounded-full border-2 border-white/20 bg-white/10"
+                  style={{
+                    backgroundImage: `url(https://i.pravatar.cc/32?img=${i})`,
+                    backgroundSize: "cover",
+                  }}
+                />
+              ))}
             </div>
+            <span className="text-sm text-white/60">Join 500+ teams</span>
           </div>
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-text-primary dark:text-text-primary-dark">Email</label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-secondary dark:text-text-secondary-dark" />
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded-lg border border-border bg-white py-2.5 pl-9 pr-3 text-sm text-text-primary outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(79,70,229,0.1)] dark:border-border-dark dark:bg-card-dark dark:text-text-primary-dark" />
-            </div>
-          </div>
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-text-primary dark:text-text-primary-dark">Password</label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-secondary dark:text-text-secondary-dark" />
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full rounded-lg border border-border bg-white py-2.5 pl-9 pr-3 text-sm text-text-primary outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(79,70,229,0.1)] dark:border-border-dark dark:bg-card-dark dark:text-text-primary-dark" />
-            </div>
-          </div>
-          <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }} type="submit" disabled={loading} className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2.5 text-sm font-semibold text-white shadow-sm disabled:opacity-70">
-            {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-            {loading ? "Creating account..." : "Sign up"}
-          </motion.button>
-        </form>
+        </div>
 
-        <p className="mt-6 text-center text-sm text-text-secondary dark:text-text-secondary-dark">
-          Already have an account?{" "}
-          <Link href="/login" className="font-medium text-primary hover:underline">Log in</Link>
-        </p>
-      </motion.div>
+        <p className="text-sm text-white/40">© 2026 StockFlow. All rights reserved.</p>
+      </div>
+
+      {/* Right Panel - Signup Form */}
+      <div className="flex w-full items-center justify-center bg-[var(--color-background)] p-8 lg:w-1/2">
+        <SignupForm />
+      </div>
     </div>
   );
 }

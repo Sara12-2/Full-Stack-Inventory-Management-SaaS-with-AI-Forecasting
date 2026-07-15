@@ -1,106 +1,84 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Warehouse, Mail, Lock } from "lucide-react";
-import { saveToken } from "@/lib/auth";
-import { useToast } from "@/components/providers/ToastProvider";
-import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
+import { isAuthenticated, removeToken } from "@/lib/auth";
+import LoginForm from "@/components/auth/LoginForm";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { showToast } = useToast();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !password) {
-      showToast("error", "Please enter your email and password.");
-      return;
-    }
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 500));
-    saveToken("mock-token");
-    showToast("success", "Welcome back.");
-    router.push("/dashboard");
-  };
+  useEffect(() => {
+    // ✅ Clear any existing token on login page load
+    removeToken();
+    
+    // Then check if authenticated (which will be false after clearing)
+    const checkAuth = () => {
+      const auth = isAuthenticated();
+      
+      if (auth) {
+        router.push("/dashboard");
+      } else {
+        setIsChecking(false);
+      }
+    };
+
+    checkAuth();
+  }, [router]);
+
+  if (isChecking) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#0D9479] border-t-transparent" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen">
-      <div className="hidden w-1/2 flex-col justify-between bg-neutral-900 p-12 lg:flex">
+      {/* Left Panel - Brand */}
+      <div className="hidden w-1/2 flex-col justify-between bg-gradient-to-br from-[#0D9479] to-[#0A7A63] p-12 lg:flex">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary">
-            <Warehouse className="h-4 w-4 text-white" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
+            <span className="text-xl font-bold text-white">SF</span>
           </div>
-          <span className="text-lg font-semibold text-white">StockFlow</span>
+          <span className="text-xl font-bold text-white">StockFlow</span>
         </div>
 
-        <div className="max-w-md">
-          <h1 className="text-2xl font-semibold leading-snug text-white">
-            Inventory that never catches you off guard.
+        <div className="max-w-md space-y-4">
+          <h1 className="text-3xl font-bold leading-tight text-white">
+            Manage your inventory
+            <br />
+            <span className="text-white/80">without the chaos.</span>
           </h1>
-          <p className="mt-4 text-sm text-neutral-400">
-            Real-time stock tracking, order management, and business reports — built for teams who can&apos;t afford to run out of stock.
+          <p className="text-white/70">
+            Real-time stock tracking, order management, and business reports — 
+            built for teams who can't afford to run out of stock.
           </p>
+          <div className="flex items-center gap-4 pt-4">
+            <div className="flex -space-x-2">
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="h-8 w-8 rounded-full border-2 border-white/20 bg-white/10"
+                  style={{
+                    backgroundImage: `url(https://i.pravatar.cc/32?img=${i})`,
+                    backgroundSize: 'cover',
+                  }}
+                />
+              ))}
+            </div>
+            <span className="text-sm text-white/60">Trusted by 500+ teams</span>
+          </div>
         </div>
 
-        <p className="text-xs text-neutral-500">© 2026 StockFlow</p>
+        <p className="text-sm text-white/40">© 2026 StockFlow. All rights reserved.</p>
       </div>
 
-      <div className="flex w-full items-center justify-center bg-surface p-8 dark:bg-surface-dark lg:w-1/2">
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} className="w-full max-w-sm">
-          <div className="mb-8 flex items-center gap-2 lg:hidden">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary">
-              <Warehouse className="h-4 w-4 text-white" />
-            </div>
-            <span className="text-lg font-semibold text-text-primary dark:text-text-primary-dark">StockFlow</span>
-          </div>
-
-          <h2 className="text-xl font-semibold text-text-primary dark:text-text-primary-dark">Sign in</h2>
-          <p className="mt-1 text-sm text-text-secondary dark:text-text-secondary-dark">Welcome back to StockFlow</p>
-
-          <div className="mt-4 rounded-lg border border-primary-border bg-primary-light px-3 py-2 text-xs text-primary dark:border-primary/20 dark:bg-primary/10">
-            Phase 1 demo — any email and password will work.
-          </div>
-
-          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-            <div>
-              <label className="mb-1.5 block text-sm font-medium text-text-primary dark:text-text-primary-dark">Email</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-secondary dark:text-text-secondary-dark" />
-                <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@company.com" className="pl-9" />
-              </div>
-            </div>
-            <div>
-              <label className="mb-1.5 block text-sm font-medium text-text-primary dark:text-text-primary-dark">Password</label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-secondary dark:text-text-secondary-dark" />
-                <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className="pl-9" />
-              </div>
-            </div>
-            <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2 text-text-secondary dark:text-text-secondary-dark">
-                <input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="rounded border-border text-primary focus:ring-primary" />
-                Remember me
-              </label>
-              <a href="#" className="font-medium text-primary hover:underline">Forgot password?</a>
-            </div>
-            <Button type="submit" loading={loading} className="w-full">
-              {loading ? "Signing in..." : "Sign in"}
-            </Button>
-          </form>
-
-          <p className="mt-6 text-center text-sm text-text-secondary dark:text-text-secondary-dark">
-            Don&apos;t have an account?{" "}
-            <Link href="/signup" className="font-medium text-primary hover:underline">Sign up</Link>
-          </p>
-        </motion.div>
+      {/* Right Panel - Login Form */}
+      <div className="flex w-full items-center justify-center bg-[var(--color-background)] p-8 lg:w-1/2">
+        <LoginForm />
       </div>
     </div>
   );
