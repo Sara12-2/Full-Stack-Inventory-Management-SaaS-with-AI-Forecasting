@@ -102,7 +102,6 @@ temp/
 
 # Docker
 docker-compose.override.yml
-*.dockerignore
 
 # Database
 *.sqlite
