@@ -9,8 +9,8 @@ const typeColor: Record<string, string> = {
 
 export default function StockMovementHistory({ movements }: { movements: StockMovement[] }) {
   return (
-    <div className="rounded-2xl border border-border bg-card p-5 shadow-soft dark:border-border-dark dark:bg-card-dark dark:shadow-soft-dark">
-      <h3 className="mb-4 font-heading text-sm font-semibold text-text-primary dark:text-text-primary-dark">Stock movement history</h3>
+    <div className="rounded-xl border border-border bg-card p-5 shadow-sm dark:border-border-dark dark:bg-card-dark dark:shadow-sm-dark">
+      <h3 className="mb-4 text-sm font-semibold text-text-primary dark:text-text-primary-dark">Stock movement history</h3>
       {movements.length === 0 ? (
         <p className="text-sm text-text-secondary dark:text-text-secondary-dark">No movements recorded yet.</p>
       ) : (
