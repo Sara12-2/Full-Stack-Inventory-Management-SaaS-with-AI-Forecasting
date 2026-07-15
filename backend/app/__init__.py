@@ -21,6 +21,7 @@ def create_app(env=None):
     if env != "testing":
         init_redis(app)
 
+    from app import models  # noqa: F401 -- registers models with SQLAlchemy metadata
     from app.routes.health import health_bp
 
     app.register_blueprint(health_bp, url_prefix="/api")
