@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, jsonify
 
 from app.config import config_by_name
 from app.extensions import cors, db, init_redis, jwt, ma, migrate, socketio
@@ -21,9 +21,23 @@ def create_app(env=None):
     if env != "testing":
         init_redis(app)
 
+    @jwt.unauthorized_loader
+    def _missing_token(reason):
+        return jsonify(error="Authentication required."), 401
+
+    @jwt.invalid_token_loader
+    def _invalid_token(reason):
+        return jsonify(error="Invalid authentication token."), 401
+
+    @jwt.expired_token_loader
+    def _expired_token(header, payload):
+        return jsonify(error="Session expired. Please log in again."), 401
+
     from app import models  # noqa: F401 -- registers models with SQLAlchemy metadata
+    from app.routes.auth import auth_bp
     from app.routes.health import health_bp
 
     app.register_blueprint(health_bp, url_prefix="/api")
+    app.register_blueprint(auth_bp, url_prefix="/api/auth")
 
     return app
