@@ -15,7 +15,7 @@ interface DataTableProps<T> {
 
 export default function DataTable<T>({ columns, data, keyExtractor, emptyMessage = "No records found." }: DataTableProps<T>) {
   return (
-    <div className="overflow-x-auto rounded-2xl border border-border bg-card shadow-soft dark:border-border-dark dark:bg-card-dark dark:shadow-soft-dark">
+    <div className="overflow-x-auto rounded-xl border border-border bg-card shadow-sm dark:border-border-dark dark:bg-card-dark dark:shadow-sm-dark">
       <table className="w-full text-left text-sm">
         <thead className="bg-slate-50/60 text-xs uppercase text-text-secondary dark:bg-white/[0.02] dark:text-text-secondary-dark">
           <tr>
