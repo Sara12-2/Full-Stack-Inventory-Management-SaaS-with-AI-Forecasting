@@ -25,8 +25,8 @@ export default function CustomerDetailPage() {
       <button onClick={() => router.back()} className="flex items-center gap-2 text-sm text-text-secondary hover:text-text-primary dark:text-text-secondary-dark dark:hover:text-text-primary-dark">
         <ArrowLeft className="h-4 w-4" /> Back to customers
       </button>
-      <div className="rounded-2xl border border-border bg-card p-5 shadow-soft dark:border-border-dark dark:bg-card-dark dark:shadow-soft-dark">
-        <h1 className="font-heading text-lg font-bold text-text-primary dark:text-text-primary-dark">{customer.name}</h1>
+      <div className="rounded-xl border border-border bg-card p-5 shadow-sm dark:border-border-dark dark:bg-card-dark dark:shadow-sm-dark">
+        <h1 className="text-lg font-bold text-text-primary dark:text-text-primary-dark">{customer.name}</h1>
         <p className="text-sm text-text-secondary dark:text-text-secondary-dark">Customer since {formatDate(customer.created_at)}</p>
         <div className="mt-4 grid grid-cols-2 gap-4 text-sm sm:grid-cols-4">
           <div><p className="text-text-secondary dark:text-text-secondary-dark">Email</p><p className="font-medium text-text-primary dark:text-text-primary-dark">{customer.email}</p></div>
