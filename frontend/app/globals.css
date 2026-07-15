@@ -2,38 +2,226 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-surface text-text-primary transition-colors duration-200;
+/* ============================================
+   DESIGN TOKENS - CSS Variables
+   ============================================ */
+@layer base {
+  :root {
+    /* ===== Brand Colors ===== */
+    --color-primary: #0D9479;
+    --color-primary-hover: #0A7A63;
+    --color-primary-light: #E6F5F1;
+    --color-primary-border: #B8E0D6;
+    --color-primary-bg: #F0F9F6;
+    --color-primary-ring: rgba(13, 148, 121, 0.3);
+
+    /* ===== Semantic Colors ===== */
+    --color-success: #16A34A;
+    --color-warning: #F59E0B;
+    --color-error: #DC2626;
+    --color-info: #3B82F6;
+
+    /* ===== Backgrounds ===== */
+    --color-background: #FFFFFF;
+    --color-surface: #FAFBFC;
+    --color-surface-secondary: #F1F4F8;
+
+    /* ===== Text ===== */
+    --color-foreground: #0F172A;
+    --color-foreground-secondary: #475569;
+    --color-foreground-muted: #94A3B8;
+
+    /* ===== Borders ===== */
+    --color-border: #E8EDF2;
+    --color-border-secondary: #D1D9E0;
+
+    /* ===== Shadows ===== */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.03);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.03);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03);
+  }
+
+  /* ===== DARK MODE ===== */
+  .dark {
+    /* ===== Backgrounds ===== */
+    --color-background: #0F172A;
+    --color-surface: #1A2332;
+    --color-surface-secondary: #243044;
+
+    /* ===== Text ===== */
+    --color-foreground: #F1F5F9;
+    --color-foreground-secondary: #94A3B8;
+    --color-foreground-muted: #64748B;
+
+    /* ===== Borders ===== */
+    --color-border: #2A3648;
+    --color-border-secondary: #3A4658;
+
+    /* ===== Brand in Dark ===== */
+    --color-primary-light: rgba(13, 148, 121, 0.12);
+    --color-primary-bg: rgba(13, 148, 121, 0.06);
+    --color-primary-border: rgba(13, 148, 121, 0.25);
+
+    /* ===== Shadows ===== */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.2);
+
+    /* ===== Semantic in Dark ===== */
+    --color-success-bg: rgba(22, 163, 74, 0.12);
+    --color-warning-bg: rgba(245, 158, 11, 0.12);
+    --color-error-bg: rgba(220, 38, 38, 0.12);
+    --color-info-bg: rgba(59, 130, 246, 0.12);
+  }
 }
 
-.dark body {
-  @apply bg-surface-dark text-text-primary-dark;
+/* ============================================
+   BASE STYLES - Using Standard Tailwind Classes
+   ============================================ */
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #FAFBFC;
+    color: #0F172A;
+    transition: background-color 150ms ease, color 150ms ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  .dark body {
+    background-color: #1A2332;
+    color: #F1F5F9;
+  }
+
+  /* ===== Selection ===== */
+  ::selection {
+    background-color: rgba(13, 148, 121, 0.2);
+    color: #0F172A;
+  }
+  .dark ::selection {
+    background-color: rgba(13, 148, 121, 0.2);
+    color: #F1F5F9;
+  }
+
+  /* ===== Focus ===== */
+  *:focus-visible {
+    outline: 2px solid #0D9479;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* ===== Links ===== */
+  a {
+    color: #0D9479;
+    transition: color 150ms ease;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #0A7A63;
+  }
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 dark:bg-slate-700;
-  border-radius: 999px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+@layer base {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #E8EDF2;
+    border-radius: 9999px;
+    transition: background-color 150ms ease;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #D1D9E0;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background-color: #2A3648;
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background-color: #3A4658;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #E8EDF2 transparent;
+  }
+  .dark * {
+    scrollbar-color: #2A3648 transparent;
+  }
 }
 
-.glass {
-  @apply bg-white/70 dark:bg-card-dark/70;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
+/* ============================================
+   UTILITIES
+   ============================================ */
+@layer utilities {
+  /* ===== Animations ===== */
+  .animate-fade-in {
+    animation: fade-in 0.15s ease-out;
+  }
+  .animate-fade-in-up {
+    animation: fade-in-up 0.25s ease-out;
+  }
+  .animate-scale-in {
+    animation: scale-in 0.2s ease-out;
+  }
 
-* {
-  scrollbar-width: thin;
-}
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 
-/* focus ring for accessibility, consistent across the app */
-:focus-visible {
-  outline: 2px solid #4F46E5;
-  outline-offset: 2px;
+  /* ===== Text Helpers ===== */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* ===== Glass Effect ===== */
+  .glass {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(232, 237, 242, 0.5);
+  }
+  .dark .glass {
+    background-color: rgba(26, 35, 50, 0.8);
+    border-color: rgba(42, 54, 72, 0.5);
+  }
+
+  /* ===== Focus Ring ===== */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-[#0D9479]/30 focus:ring-offset-2 focus:ring-offset-white;
+  }
+  .dark .focus-ring {
+    @apply focus:ring-offset-[#1A2332];
+  }
 }
