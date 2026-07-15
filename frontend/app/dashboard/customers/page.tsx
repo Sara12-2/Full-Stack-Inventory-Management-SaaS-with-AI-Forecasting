@@ -42,8 +42,8 @@ export default function CustomersPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-heading text-2xl font-bold text-text-primary dark:text-text-primary-dark">Customers</h1>
-        <button onClick={() => { setEditing(null); setFormOpen(true); }} className="flex items-center gap-2 rounded-lg bg-gradient-brand px-4 py-2.5 text-sm font-semibold text-white shadow-glow">
+        <h1 className="text-2xl font-bold text-text-primary dark:text-text-primary-dark">Customers</h1>
+        <button onClick={() => { setEditing(null); setFormOpen(true); }} className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-sm">
           <Plus className="h-4 w-4" /> Add Customer
         </button>
       </div>
