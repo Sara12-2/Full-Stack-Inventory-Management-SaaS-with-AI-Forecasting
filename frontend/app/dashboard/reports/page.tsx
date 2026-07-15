@@ -12,16 +12,16 @@ const reports = [
 export default function ReportsPage() {
   return (
     <div className="space-y-6">
-      <h1 className="font-heading text-2xl font-bold text-text-primary dark:text-text-primary-dark">Reports</h1>
+      <h1 className="text-2xl font-bold text-text-primary dark:text-text-primary-dark">Reports</h1>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {reports.map((r) => (
-          <div key={r.id} className="rounded-2xl border border-border bg-card p-5 shadow-soft dark:border-border-dark dark:bg-card-dark dark:shadow-soft-dark">
+          <div key={r.id} className="rounded-xl border border-border bg-card p-5 shadow-sm dark:border-border-dark dark:bg-card-dark dark:shadow-sm-dark">
             <div className="flex items-start gap-3">
-              <div className="rounded-xl bg-gradient-brand p-2.5">
+              <div className="rounded-xl bg-primary p-2.5">
                 <FileBarChart className="h-4 w-4 text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="font-heading text-sm font-semibold text-text-primary dark:text-text-primary-dark">{r.label}</h3>
+                <h3 className="text-sm font-semibold text-text-primary dark:text-text-primary-dark">{r.label}</h3>
                 <p className="mt-1 text-xs text-text-secondary dark:text-text-secondary-dark">{r.description}</p>
               </div>
             </div>
