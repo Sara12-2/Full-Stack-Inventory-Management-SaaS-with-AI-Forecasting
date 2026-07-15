@@ -14,28 +14,32 @@ const features = [
 
 export default function FeatureGrid() {
   return (
-    <section className="px-4 py-20 sm:px-6">
-      <div className="mx-auto max-w-6xl">
+    <section className="section-spacing px-4 sm:px-6">
+      <div className="container-custom">
         <div className="mx-auto max-w-xl text-center">
-          <h2 className="text-3xl font-bold text-text-primary dark:text-text-primary-dark">Everything you need, nothing you don&apos;t</h2>
-          <p className="mt-3 text-text-secondary dark:text-text-secondary-dark">A focused feature set built around how small e-commerce teams actually operate.</p>
+          <h2 className="text-3xl font-bold text-[var(--color-text)]">
+            Everything you need, nothing you don&apos;t
+          </h2>
+          <p className="mt-3 text-[var(--color-text-secondary)]">
+            A focused feature set built around how small e-commerce teams actually operate.
+          </p>
         </div>
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        <div className="feature-grid mt-12 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((f, i) => (
             <motion.div
               key={f.title}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              whileHover={{ y: -4 }}
-              className="rounded-xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-sm dark:border-border-dark dark:bg-card-dark dark:shadow-sm-dark"
+              transition={{ duration: 0.3, delay: i * 0.05 }}
+              className="card-interactive p-6"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#0D9479]">
                 <f.icon className="h-5 w-5 text-white" />
               </div>
-              <h3 className="mt-4 text-base font-semibold text-text-primary dark:text-text-primary-dark">{f.title}</h3>
-              <p className="mt-2 text-sm text-text-secondary dark:text-text-secondary-dark">{f.desc}</p>
+              <h3 className="mt-4 text-base font-semibold text-[var(--color-text)]">{f.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">{f.desc}</p>
             </motion.div>
           ))}
         </div>
