@@ -15,7 +15,10 @@ class OrderItem(db.Model):
 
     @property
     def total_price(self):
-        return float(self.unit_price) * self.quantity
+        # Multiply in Decimal space first -- converting unit_price to float
+        # before multiplying introduces binary-float rounding artifacts
+        # (e.g. 19.99 * 5 == 99.94999999999999).
+        return float(self.unit_price * self.quantity)
 
     def to_dict(self):
         return {
