@@ -2,105 +2,176 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, PlayCircle } from "lucide-react";
+import { ArrowRight, Package, ShoppingBag, TrendingUp, PlayCircle, Zap } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="px-6 pb-24 pt-20 sm:px-8 sm:pt-28 lg:px-12">
-      <div className="mx-auto max-w-4xl text-center">
-        {/* Badge - clean */}
-        <motion.div
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#E8EDF2] bg-white px-4 py-1.5 text-xs font-medium text-[#475569] dark:border-[#2A3648] dark:bg-[#1A2332] dark:text-[#94A3B8]"
-        >
-          <span className="h-1.5 w-1.5 rounded-full bg-[#0D9479]" />
-          Built for small e-commerce teams
-        </motion.div>
+    <section className="relative overflow-hidden px-6 pb-20 pt-20 sm:px-8 lg:px-12">
+      {/* Subtle background — one soft glow, no competing colors */}
+      <div className="absolute inset-0 -z-10 bg-[var(--color-background)]" />
+      <div className="absolute left-1/2 top-0 -z-10 h-[400px] w-[700px] -translate-x-1/2 rounded-full bg-[#0D9479]/[0.05] blur-3xl" />
 
-        {/* Heading */}
-        <motion.h1
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.05 }}
-          className="text-4xl font-bold tracking-tight text-[#0F172A] dark:text-white sm:text-5xl lg:text-6xl"
-        >
-          Inventory that{" "}
-          <span className="text-[#0D9479]">
-            never catches you
-          </span>{" "}
-          off guard.
-        </motion.h1>
+      <div className="mx-auto max-w-7xl">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          
+          {/* ============================================
+              LEFT COLUMN
+              ============================================ */}
+          <div>
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#0D9479]/25 bg-[#0D9479]/10 px-3.5 py-1.5 text-xs font-medium text-[#0D9479]"
+            >
+              <Zap className="h-3.5 w-3.5" />
+              Built for growing e-commerce teams
+            </motion.div>
 
-        {/* Description */}
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.1 }}
-          className="mx-auto mt-5 max-w-2xl text-base text-[#475569] dark:text-[#94A3B8] sm:text-lg"
-        >
-          Track stock, manage orders, and get real-time low-stock alerts — all from one 
-          clean dashboard. No spreadsheets, no expensive ERP software.
-        </motion.p>
+            {/* Heading — Fixed alignment */}
+            <motion.h1
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.05 }}
+              className="text-4xl font-bold leading-[1.1] tracking-tight text-[var(--color-text)] sm:text-5xl lg:text-6xl"
+            >
+              <span className="block">Never run out of</span>
+              <span className="block text-[#0D9479]">what you sell.</span>
+            </motion.h1>
 
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.15 }}
-          className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-3"
-        >
-          <Link
-            href="/signup"
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#0D9479] px-6 py-2.5 text-sm font-medium text-white transition-all hover:bg-[#0A7A63] active:scale-[0.98]"
-          >
-            Start Free
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-          <button
-            className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#E8EDF2] bg-white px-6 py-2.5 text-sm font-medium text-[#0F172A] transition-all hover:bg-[#F8FAFC] dark:border-[#2A3648] dark:bg-[#1A2332] dark:text-white dark:hover:bg-[#243044]"
-          >
-            <PlayCircle className="h-4 w-4" />
-            Watch Demo
-          </button>
-        </motion.div>
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="mt-5 max-w-lg text-base leading-relaxed text-[var(--color-text-secondary)] sm:text-lg"
+            >
+              The all-in-one platform to track inventory, manage orders, and
+              grow your business — without the complexity of traditional ERP
+              systems.
+            </motion.p>
 
-        {/* Trust indicators */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.35, delay: 0.2 }}
-          className="mt-10 flex items-center justify-center gap-6 text-xs text-[#94A3B8] dark:text-[#64748B]"
-        >
-          <span className="flex items-center gap-2">
-            <span className="flex -space-x-1.5">
-              {[1, 2, 3].map((i) => (
-                <span
-                  key={i}
-                  className="inline-block h-6 w-6 rounded-full border-2 border-white bg-[#E8EDF2] dark:border-[#1A2332] dark:bg-[#2A3648]"
-                  style={{
-                    backgroundImage: `url(https://i.pravatar.cc/24?img=${i})`,
-                    backgroundSize: 'cover',
-                  }}
-                />
+            {/* Feature List */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
+              className="mt-6 flex flex-wrap gap-5"
+            >
+              {[
+                { icon: Package, label: "Real-time stock" },
+                { icon: ShoppingBag, label: "Order tracking" },
+                { icon: TrendingUp, label: "Analytics" },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center gap-1.5 text-sm text-[var(--color-text-secondary)]">
+                  <item.icon className="h-4 w-4 text-[#0D9479]" />
+                  {item.label}
+                </div>
               ))}
-            </span>
-            <span className="text-[#475569] dark:text-[#94A3B8]">
-              Trusted by <span className="font-semibold text-[#0F172A] dark:text-white">500+</span> teams
-            </span>
-          </span>
-          <span className="h-4 w-px bg-[#E8EDF2] dark:bg-[#2A3648]" />
-          <span className="flex items-center gap-1.5 text-[#475569] dark:text-[#94A3B8]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#16A34A]" />
-            Free 14-day trial
-          </span>
-          <span className="hidden h-4 w-px bg-[#E8EDF2] dark:bg-[#2A3648] md:block" />
-          <span className="hidden items-center gap-1.5 text-[#475569] dark:text-[#94A3B8] md:flex">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#16A34A]" />
-            No credit card
-          </span>
-        </motion.div>
+            </motion.div>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+              className="mt-8 flex flex-wrap items-center gap-3"
+            >
+              <Link
+                href="/signup"
+                className="group inline-flex items-center gap-2 rounded-lg bg-[#0D9479] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#0A7A63]"
+              >
+                Start Free Trial
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-3 text-sm font-medium text-[var(--color-text)] transition-colors hover:bg-[var(--color-surface-hover)]"
+              >
+                <PlayCircle className="h-4 w-4 text-[#0D9479]" />
+                Live Demo
+              </Link>
+            </motion.div>
+
+            {/* Trust Stats */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.25 }}
+              className="mt-10 flex flex-wrap gap-8 border-t border-[var(--color-border)] pt-6"
+            >
+              {[
+                { number: "500+", label: "Active businesses" },
+                { number: "99.9%", label: "Uptime" },
+                { number: "5 min", label: "Setup time" },
+              ].map((stat) => (
+                <div key={stat.label}>
+                  <p className="text-lg font-bold text-[var(--color-text)]">{stat.number}</p>
+                  <p className="text-xs text-[var(--color-text-muted)]">{stat.label}</p>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* ============================================
+              RIGHT COLUMN — Dashboard Preview
+              ============================================ */}
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: 0.15 }}
+          >
+            <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-lg">
+              {/* Browser Chrome */}
+              <div className="flex items-center gap-2 border-b border-[var(--color-border)] px-4 py-3">
+                <div className="flex gap-1.5">
+                  <div className="h-2.5 w-2.5 rounded-full bg-red-400" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                </div>
+                <div className="mx-auto max-w-[180px] flex-1 rounded-md bg-[var(--color-surface-hover)] px-3 py-1 text-center text-xs text-[var(--color-text-muted)]">
+                  app.stockflow.com
+                </div>
+              </div>
+
+              {/* Dashboard Content */}
+              <div className="p-5">
+                {/* Stats Grid */}
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {[
+                    { label: "Revenue", value: "$24.8K" },
+                    { label: "Orders", value: "1,284" },
+                    { label: "Products", value: "342" },
+                    { label: "Low Stock", value: "8" },
+                  ].map((stat) => (
+                    <div key={stat.label} className="rounded-lg bg-[var(--color-surface-hover)] p-3">
+                      <p className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
+                        {stat.label}
+                      </p>
+                      <p className="mt-0.5 text-lg font-bold text-[var(--color-text)]">
+                        {stat.value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Chart */}
+                <div className="mt-3 rounded-lg bg-[var(--color-surface-hover)] p-3">
+                  <div className="flex items-end gap-1.5 h-16">
+                    {[45, 55, 70, 60, 85, 75, 90].map((h, i) => (
+                      <div
+                        key={i}
+                        className="flex-1 rounded-sm bg-[#0D9479]/30 transition-all hover:bg-[#0D9479]/50"
+                        style={{ height: `${h}%` }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
