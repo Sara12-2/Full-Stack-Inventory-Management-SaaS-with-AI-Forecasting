@@ -35,9 +35,23 @@ def create_app(env=None):
 
     from app import models  # noqa: F401 -- registers models with SQLAlchemy metadata
     from app.routes.auth import auth_bp
+    from app.routes.categories import categories_bp
+    from app.routes.customers import customers_bp
+    from app.routes.dashboard import dashboard_bp
     from app.routes.health import health_bp
+    from app.routes.inventory import inventory_bp
+    from app.routes.orders import orders_bp
+    from app.routes.products import products_bp
+    from app.routes.suppliers import suppliers_bp
 
     app.register_blueprint(health_bp, url_prefix="/api")
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
+    app.register_blueprint(products_bp, url_prefix="/api/products")
+    app.register_blueprint(categories_bp, url_prefix="/api/categories")
+    app.register_blueprint(suppliers_bp, url_prefix="/api/suppliers")
+    app.register_blueprint(inventory_bp, url_prefix="/api/inventory")
+    app.register_blueprint(orders_bp, url_prefix="/api/orders")
+    app.register_blueprint(customers_bp, url_prefix="/api/customers")
+    app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
 
     return app
