@@ -11,7 +11,7 @@ const config: Config = {
       colors: {
         primary: {
           DEFAULT: "#0D9479",
-          hover: "#0B7D66",
+          hover: "#0A7A63",
           light: "#ECFDF5",
           border: "#A7F3D0",
           foreground: "#FFFFFF",
@@ -20,17 +20,17 @@ const config: Config = {
         warning: { DEFAULT: "#B45309", light: "#FFFBEB" },
         danger: { DEFAULT: "#B91C1C", light: "#FEF2F2" },
 
-        surface: "#FAFAFA",
-        "surface-dark": "#0A0A0A",
+        surface: "#F8FAFC",
+        "surface-dark": "#0F172A",
         card: "#FFFFFF",
-        "card-dark": "#141414",
-        border: "#E5E5E5",
-        "border-dark": "#262626",
+        "card-dark": "#1E293B",
+        border: "#E8EDF2",
+        "border-dark": "#334155",
 
         "text-primary": "#171717",
-        "text-primary-dark": "#F5F5F5",
+        "text-primary-dark": "#F1F5F9",
         "text-secondary": "#737373",
-        "text-secondary-dark": "#A3A3A3",
+        "text-secondary-dark": "#94A3B8",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],

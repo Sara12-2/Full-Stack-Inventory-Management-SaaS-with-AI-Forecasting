@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { isAuthenticated, removeToken } from "@/lib/auth";
+import { isAuthenticated } from "@/lib/auth";
 import LoginForm from "@/components/auth/LoginForm";
 
 export default function LoginPage() {
@@ -10,21 +10,11 @@ export default function LoginPage() {
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    // ✅ Clear any existing token on login page load
-    removeToken();
-    
-    // Then check if authenticated (which will be false after clearing)
-    const checkAuth = () => {
-      const auth = isAuthenticated();
-      
-      if (auth) {
-        router.push("/dashboard");
-      } else {
-        setIsChecking(false);
-      }
-    };
-
-    checkAuth();
+    if (isAuthenticated()) {
+      router.push("/dashboard");
+    } else {
+      setIsChecking(false);
+    }
   }, [router]);
 
   if (isChecking) {
@@ -54,7 +44,7 @@ export default function LoginPage() {
           </h1>
           <p className="text-white/70">
             Real-time stock tracking, order management, and business reports — 
-            built for teams who can't afford to run out of stock.
+            built for teams who can&apos;t afford to run out of stock.
           </p>
           <div className="flex items-center gap-4 pt-4">
             <div className="flex -space-x-2">

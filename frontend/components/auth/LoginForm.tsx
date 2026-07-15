@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Mail, Lock, Loader2 } from "lucide-react";
+import { Mail, Lock, Loader2, Eye, EyeOff } from "lucide-react";
 import { saveToken } from "@/lib/auth";
 import { useToast } from "@/components/providers/ToastProvider";
 
@@ -14,10 +14,16 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
+    const errors: { email?: string; password?: string } = {};
+    if (!email) errors.email = "Email is required.";
+    if (!password) errors.password = "Password is required.";
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) {
       showToast("error", "Please enter your email and password.");
       return;
     }
@@ -37,42 +43,64 @@ export default function LoginForm() {
         Phase 1 demo — any email and password will work.
       </div>
 
-      <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+      <form onSubmit={handleSubmit} noValidate className="mt-6 space-y-4">
         <div>
-          <label className="label">Email</label>
+          <label htmlFor="login-email" className="label">Email</label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--color-text-muted)]" />
+            <Mail aria-hidden="true" className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--color-text-muted)]" />
             <input
+              id="login-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@company.com"
               className="input pl-9"
+              aria-invalid={!!fieldErrors.email}
+              aria-describedby={fieldErrors.email ? "login-email-error" : undefined}
             />
           </div>
+          {fieldErrors.email && (
+            <p id="login-email-error" className="mt-1 text-xs text-danger">{fieldErrors.email}</p>
+          )}
         </div>
         <div>
-          <label className="label">Password</label>
+          <label htmlFor="login-password" className="label">Password</label>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--color-text-muted)]" />
+            <Lock aria-hidden="true" className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--color-text-muted)]" />
             <input
-              type="password"
+              id="login-password"
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="input pl-9"
+              className="input pl-9 pr-10"
+              aria-invalid={!!fieldErrors.password}
+              aria-describedby={fieldErrors.password ? "login-password-error" : undefined}
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword((s) => !s)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
+            >
+              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </button>
           </div>
+          {fieldErrors.password && (
+            <p id="login-password-error" className="mt-1 text-xs text-danger">{fieldErrors.password}</p>
+          )}
         </div>
         <div className="flex items-center justify-between text-sm">
           <label className="flex items-center gap-2 text-[var(--color-text-secondary)]">
             <input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="rounded border-[var(--color-border)] text-[#0D9479] focus:ring-[#0D9479]" />
             Remember me
           </label>
-          <a href="#" className="font-medium text-[#0D9479] hover:underline">Forgot password?</a>
+          <button type="button" disabled title="Coming soon" className="font-medium text-[var(--color-text-muted)] cursor-not-allowed">
+            Forgot password?
+          </button>
         </div>
         <button type="submit" disabled={loading} className="btn-primary btn-lg w-full">
-          {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+          {loading && <Loader2 aria-hidden="true" className="h-4 w-4 animate-spin" />}
           {loading ? "Signing in..." : "Sign in"}
         </button>
       </form>

@@ -82,10 +82,10 @@ export default function AboutSection() {
               StockFlow was built by <span className="font-medium text-[var(--color-text)]">DevHatch Labs</span> to solve a problem small e-commerce businesses face every day.
             </p>
             <p className="text-lg leading-relaxed">
-              Managing inventory on spreadsheets that don't scale, don't warn you before you run out of stock, and don't give you a single view of how the business is actually doing.
+              Managing inventory on spreadsheets that don&apos;t scale, don&apos;t warn you before you run out of stock, and don&apos;t give you a single view of how the business is actually doing.
             </p>
             <p className="text-lg leading-relaxed">
-              We're building StockFlow as a focused, honest alternative to expensive ERP software — <span className="font-medium text-[var(--color-text)]">self-hostable, fast, and built around the workflows a small team actually has time for.</span>
+              We&apos;re building StockFlow as a focused, honest alternative to expensive ERP software — <span className="font-medium text-[var(--color-text)]">self-hostable, fast, and built around the workflows a small team actually has time for.</span>
             </p>
           </motion.div>
 

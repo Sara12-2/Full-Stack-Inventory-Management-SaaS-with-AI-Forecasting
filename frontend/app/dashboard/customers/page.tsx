@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Plus } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { Plus, AlertTriangle } from "lucide-react";
 import SearchInput from "@/components/shared/SearchInput";
 import CustomerTable from "@/components/customers/CustomerTable";
 import CustomerForm from "@/components/customers/CustomerForm";
+import Skeleton from "@/components/ui/Skeleton";
+import EmptyState from "@/components/ui/EmptyState";
 import { getCustomers } from "@/lib/mock-api";
 import { Customer } from "@/types/customer";
 import { useToast } from "@/components/providers/ToastProvider";
@@ -15,10 +17,21 @@ export default function CustomersPage() {
   const [search, setSearch] = useState("");
   const [formOpen, setFormOpen] = useState(false);
   const [editing, setEditing] = useState<Customer | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const load = useCallback(() => {
+    setLoading(true);
+    setError(null);
+    getCustomers()
+      .then(setCustomers)
+      .catch(() => setError("Couldn't load customers. Please try again."))
+      .finally(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
-    getCustomers().then(setCustomers);
-  }, []);
+    load();
+  }, [load]);
 
   const filtered = customers.filter((c) => c.name.toLowerCase().includes(search.toLowerCase()));
 
@@ -48,7 +61,16 @@ export default function CustomersPage() {
         </button>
       </div>
       <SearchInput value={search} onChange={setSearch} placeholder="Search customers..." />
-      <CustomerTable customers={filtered} />
+
+      {loading ? (
+        <div className="space-y-2">
+          {[...Array(5)].map((_, i) => <Skeleton key={i} className="h-12 w-full" />)}
+        </div>
+      ) : error ? (
+        <EmptyState icon={AlertTriangle} title="Something went wrong" description={error} actionLabel="Retry" onAction={load} />
+      ) : (
+        <CustomerTable customers={filtered} />
+      )}
       <CustomerForm open={formOpen} customer={editing} onClose={() => { setFormOpen(false); setEditing(null); }} onSave={handleSave} />
     </div>
   );

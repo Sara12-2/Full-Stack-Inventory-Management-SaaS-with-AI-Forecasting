@@ -1,3 +1,5 @@
+import { User } from "@/types/user";
+
 const TOKEN_KEY = "stockflow_token";
 const USER_KEY = "stockflow_user";
 
@@ -15,13 +17,6 @@ export const getToken = () => {
   return null;
 };
 
-export const removeToken = () => {
-  if (typeof window !== "undefined") {
-    localStorage.removeItem(TOKEN_KEY);
-  }
-};
-
-// ✅ Add this function
 export const clearToken = () => {
   if (typeof window !== "undefined") {
     localStorage.removeItem(TOKEN_KEY);
@@ -30,24 +25,18 @@ export const clearToken = () => {
 };
 
 // ===== User Functions =====
-export const saveUser = (user: any) => {
+export const saveUser = (user: User) => {
   if (typeof window !== "undefined") {
     localStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 };
 
-export const getUser = () => {
+export const getUser = (): User | null => {
   if (typeof window !== "undefined") {
     const user = localStorage.getItem(USER_KEY);
-    return user ? JSON.parse(user) : null;
+    return user ? (JSON.parse(user) as User) : null;
   }
   return null;
-};
-
-export const removeUser = () => {
-  if (typeof window !== "undefined") {
-    localStorage.removeItem(USER_KEY);
-  }
 };
 
 // ===== Auth Check =====
@@ -57,13 +46,4 @@ export const isAuthenticated = () => {
     return token !== null && token !== "" && token !== "null" && token !== "undefined";
   }
   return false;
-};
-
-// ===== Logout =====
-export const logout = () => {
-  if (typeof window !== "undefined") {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(USER_KEY);
-    window.location.href = "/login";
-  }
 };

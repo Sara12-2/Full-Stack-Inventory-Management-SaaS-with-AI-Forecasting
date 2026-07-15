@@ -83,12 +83,12 @@ export default function ContactForm() {
       {/* Header */}
       <div className="mb-6 text-center">
         <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[#0D9479]/10 px-3 py-1 text-xs font-medium text-[#0D9479]">
-          <Sparkles className="h-3 w-3" />
+          <Sparkles aria-hidden="true" className="h-3 w-3" />
           Get in touch
         </div>
         <h3 className="text-xl font-bold text-[var(--color-text)]">Send us a message</h3>
         <p className="mt-1 text-sm text-[var(--color-text-muted)]">
-          We'll reply within 24 hours
+          We&apos;ll reply within 24 hours
         </p>
       </div>
 
@@ -99,12 +99,13 @@ export default function ContactForm() {
         viewport={{ once: true }}
         transition={{ delay: 0.05 }}
       >
-        <label className="label flex items-center gap-2">
-          <User className="h-4 w-4 text-[#0D9479]" />
+        <label htmlFor="contact-name" className="label flex items-center gap-2">
+          <User aria-hidden="true" className="h-4 w-4 text-[#0D9479]" />
           Full Name
         </label>
         <div className="relative">
           <input
+            id="contact-name"
             className={`input pr-10 transition-all duration-200 ${
               focused === "name" ? "border-[#0D9479] ring-2 ring-[#0D9479]/20" : ""
             } ${getFieldError("name") ? "border-red-500 ring-2 ring-red-500/20" : ""} ${
@@ -112,6 +113,8 @@ export default function ContactForm() {
             }`}
             placeholder="John Doe"
             value={form.name}
+            aria-invalid={!!getFieldError("name")}
+            aria-describedby={getFieldError("name") ? "contact-name-error" : undefined}
             onFocus={() => setFocused("name")}
             onBlur={() => {
               setFocused(null);
@@ -139,6 +142,7 @@ export default function ContactForm() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -5 }}
               className="mt-1 text-xs text-red-500"
+            id="contact-name-error"
             >
               {getFieldError("name")}
             </motion.p>
@@ -153,12 +157,13 @@ export default function ContactForm() {
         viewport={{ once: true }}
         transition={{ delay: 0.1 }}
       >
-        <label className="label flex items-center gap-2">
-          <Mail className="h-4 w-4 text-[#0D9479]" />
+        <label htmlFor="contact-email" className="label flex items-center gap-2">
+          <Mail aria-hidden="true" className="h-4 w-4 text-[#0D9479]" />
           Email Address
         </label>
         <div className="relative">
           <input
+            id="contact-email"
             type="email"
             className={`input pr-10 transition-all duration-200 ${
               focused === "email" ? "border-[#0D9479] ring-2 ring-[#0D9479]/20" : ""
@@ -167,6 +172,8 @@ export default function ContactForm() {
             }`}
             placeholder="you@example.com"
             value={form.email}
+            aria-invalid={!!getFieldError("email")}
+            aria-describedby={getFieldError("email") ? "contact-email-error" : undefined}
             onFocus={() => setFocused("email")}
             onBlur={() => {
               setFocused(null);
@@ -194,6 +201,7 @@ export default function ContactForm() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -5 }}
               className="mt-1 text-xs text-red-500"
+            id="contact-email-error"
             >
               {getFieldError("email")}
             </motion.p>
@@ -208,12 +216,13 @@ export default function ContactForm() {
         viewport={{ once: true }}
         transition={{ delay: 0.15 }}
       >
-        <label className="label flex items-center gap-2">
-          <MessageSquare className="h-4 w-4 text-[#0D9479]" />
+        <label htmlFor="contact-message" className="label flex items-center gap-2">
+          <MessageSquare aria-hidden="true" className="h-4 w-4 text-[#0D9479]" />
           Message
         </label>
         <div className="relative">
           <textarea
+            id="contact-message"
             rows={4}
             className={`input min-h-[100px] resize-y pr-10 transition-all duration-200 ${
               focused === "message" ? "border-[#0D9479] ring-2 ring-[#0D9479]/20" : ""
@@ -222,6 +231,8 @@ export default function ContactForm() {
             }`}
             placeholder="Tell us how we can help..."
             value={form.message}
+            aria-invalid={!!getFieldError("message")}
+            aria-describedby={getFieldError("message") ? "contact-message-error" : undefined}
             onFocus={() => setFocused("message")}
             onBlur={() => {
               setFocused(null);
@@ -249,6 +260,7 @@ export default function ContactForm() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -5 }}
               className="mt-1 text-xs text-red-500"
+            id="contact-message-error"
             >
               {getFieldError("message")}
             </motion.p>
@@ -315,7 +327,7 @@ export default function ContactForm() {
         transition={{ delay: 0.3 }}
         className="mt-4 text-center text-xs text-[var(--color-text-muted)]"
       >
-        We'll never share your information. No spam, ever.
+        We&apos;ll never share your information. No spam, ever.
       </motion.p>
     </motion.form>
   );

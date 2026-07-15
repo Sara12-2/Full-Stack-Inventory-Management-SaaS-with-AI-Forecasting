@@ -5,7 +5,9 @@ export default function StockBadge({ product }: { product: Product }) {
   return (
     <span
       className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-        low ? "bg-red-50 text-red-600" : "bg-green-50 text-green-700"
+        low
+          ? "bg-danger-light text-danger dark:bg-danger/10"
+          : "bg-success-light text-success dark:bg-success/10"
       }`}
     >
       {product.stock_quantity} in stock
