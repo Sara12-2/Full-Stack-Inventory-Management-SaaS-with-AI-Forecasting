@@ -31,7 +31,7 @@ export default function ContactForm() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       onSubmit={handleSubmit}
-      className="mx-auto max-w-lg space-y-4 rounded-2xl border border-border bg-card p-8 shadow-soft dark:border-border-dark dark:bg-card-dark dark:shadow-soft-dark"
+      className="mx-auto max-w-lg space-y-4 rounded-xl border border-border bg-card p-8 shadow-sm dark:border-border-dark dark:bg-card-dark dark:shadow-sm-dark"
     >
       <div>
         <label className="mb-1.5 block text-sm font-medium text-text-primary dark:text-text-primary-dark">Name</label>
@@ -45,7 +45,7 @@ export default function ContactForm() {
         <label className="mb-1.5 block text-sm font-medium text-text-primary dark:text-text-primary-dark">Message</label>
         <textarea rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={inputClass} />
       </div>
-      <button type="submit" disabled={loading} className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-brand py-2.5 text-sm font-semibold text-white shadow-glow disabled:opacity-70">
+      <button type="submit" disabled={loading} className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2.5 text-sm font-semibold text-white shadow-sm disabled:opacity-70">
         {loading && <Loader2 className="h-4 w-4 animate-spin" />}
         {loading ? "Sending..." : "Send Message"}
       </button>

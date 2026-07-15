@@ -27,7 +27,7 @@ export default function PricingTable() {
     <section className="px-4 py-20 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto max-w-xl text-center">
-          <h2 className="font-heading text-3xl font-bold text-text-primary dark:text-text-primary-dark">Simple, honest pricing</h2>
+          <h2 className="text-3xl font-bold text-text-primary dark:text-text-primary-dark">Simple, honest pricing</h2>
           <p className="mt-3 text-text-secondary dark:text-text-secondary-dark">Start free. Upgrade when your catalog outgrows the basics.</p>
         </div>
         <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -38,16 +38,16 @@ export default function PricingTable() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.08 }}
-              className={`rounded-2xl border p-8 ${
+              className={`rounded-xl border p-8 ${
                 plan.highlighted
-                  ? "border-primary bg-gradient-brand text-white shadow-glow"
-                  : "border-border bg-card shadow-soft dark:border-border-dark dark:bg-card-dark dark:shadow-soft-dark"
+                  ? "border-primary bg-primary text-white shadow-sm"
+                  : "border-border bg-card shadow-sm dark:border-border-dark dark:bg-card-dark dark:shadow-sm-dark"
               }`}
             >
-              <h3 className={`font-heading text-lg font-bold ${plan.highlighted ? "text-white" : "text-text-primary dark:text-text-primary-dark"}`}>{plan.name}</h3>
+              <h3 className={`text-lg font-bold ${plan.highlighted ? "text-white" : "text-text-primary dark:text-text-primary-dark"}`}>{plan.name}</h3>
               <p className={`mt-1 text-sm ${plan.highlighted ? "text-white/80" : "text-text-secondary dark:text-text-secondary-dark"}`}>{plan.desc}</p>
               <div className="mt-4 flex items-baseline gap-1">
-                <span className={`font-heading text-3xl font-bold ${plan.highlighted ? "text-white" : "text-text-primary dark:text-text-primary-dark"}`}>{plan.price}</span>
+                <span className={`text-3xl font-bold ${plan.highlighted ? "text-white" : "text-text-primary dark:text-text-primary-dark"}`}>{plan.price}</span>
                 {plan.period && <span className={plan.highlighted ? "text-white/70" : "text-text-secondary dark:text-text-secondary-dark"}>{plan.period}</span>}
               </div>
               <ul className="mt-6 space-y-3">
@@ -61,7 +61,7 @@ export default function PricingTable() {
               <Link
                 href="/signup"
                 className={`mt-8 block w-full rounded-lg py-2.5 text-center text-sm font-semibold transition-transform hover:scale-[1.02] ${
-                  plan.highlighted ? "bg-white text-primary" : "bg-gradient-brand text-white shadow-glow"
+                  plan.highlighted ? "bg-white text-primary" : "bg-primary text-white shadow-sm"
                 }`}
               >
                 Get Started

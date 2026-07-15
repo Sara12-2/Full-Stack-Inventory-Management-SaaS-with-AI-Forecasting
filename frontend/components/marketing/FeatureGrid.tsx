@@ -17,7 +17,7 @@ export default function FeatureGrid() {
     <section className="px-4 py-20 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto max-w-xl text-center">
-          <h2 className="font-heading text-3xl font-bold text-text-primary dark:text-text-primary-dark">Everything you need, nothing you don&apos;t</h2>
+          <h2 className="text-3xl font-bold text-text-primary dark:text-text-primary-dark">Everything you need, nothing you don&apos;t</h2>
           <p className="mt-3 text-text-secondary dark:text-text-secondary-dark">A focused feature set built around how small e-commerce teams actually operate.</p>
         </div>
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -29,12 +29,12 @@ export default function FeatureGrid() {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
               whileHover={{ y: -4 }}
-              className="rounded-2xl border border-border bg-card p-6 shadow-soft transition-shadow hover:shadow-glow dark:border-border-dark dark:bg-card-dark dark:shadow-soft-dark"
+              className="rounded-xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-sm dark:border-border-dark dark:bg-card-dark dark:shadow-sm-dark"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-brand">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary">
                 <f.icon className="h-5 w-5 text-white" />
               </div>
-              <h3 className="mt-4 font-heading text-base font-semibold text-text-primary dark:text-text-primary-dark">{f.title}</h3>
+              <h3 className="mt-4 text-base font-semibold text-text-primary dark:text-text-primary-dark">{f.title}</h3>
               <p className="mt-2 text-sm text-text-secondary dark:text-text-secondary-dark">{f.desc}</p>
             </motion.div>
           ))}
