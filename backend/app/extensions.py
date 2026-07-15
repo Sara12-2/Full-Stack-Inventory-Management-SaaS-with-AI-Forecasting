@@ -13,17 +13,17 @@ ma = Marshmallow()
 cors = CORS()
 socketio = SocketIO()
 
-redis_client = None
-
-
 def init_redis(app):
-    """Connect to Redis for caching/pubsub. Non-fatal if unavailable in dev."""
-    global redis_client
+    """Connect to Redis for caching/pubsub. Non-fatal if unavailable in dev.
+
+    Stored on the app object (not a module-level global) so it can't go
+    stale across multiple create_app() calls in the same process.
+    """
     try:
         client = redis_lib.from_url(app.config["REDIS_URL"], socket_connect_timeout=2)
         client.ping()
-        redis_client = client
+        app.redis_client = client
         app.logger.info("Connected to Redis at %s", app.config["REDIS_URL"])
     except Exception as exc:
-        redis_client = None
+        app.redis_client = None
         app.logger.warning("Redis unavailable (%s); continuing without cache/pubsub", exc)

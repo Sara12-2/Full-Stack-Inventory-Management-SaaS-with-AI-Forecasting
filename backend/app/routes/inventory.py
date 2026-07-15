@@ -5,6 +5,7 @@ from marshmallow import Schema, ValidationError, fields, validate
 from app.extensions import db
 from app.models import Product, StockMovement
 from app.models.stock_movement import MOVEMENT_TYPES
+from app.services.alert_service import emit_low_stock_alert
 from app.utils.errors import first_error
 
 inventory_bp = Blueprint("inventory", __name__)
@@ -34,6 +35,7 @@ def adjust_stock():
 
     movement_type = payload["movement_type"]
     quantity = payload["quantity"]
+    before_quantity = product.stock_quantity
 
     if movement_type == "in":
         product.stock_quantity += quantity
@@ -55,5 +57,10 @@ def adjust_stock():
     )
     db.session.add(movement)
     db.session.commit()
+
+    was_low = before_quantity <= product.low_stock_threshold
+    is_low = product.stock_quantity <= product.low_stock_threshold
+    if is_low and not was_low:
+        emit_low_stock_alert(product)
 
     return jsonify(product=product.to_dict(), movement=movement.to_dict()), 200
