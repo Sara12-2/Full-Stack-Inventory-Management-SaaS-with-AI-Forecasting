@@ -40,12 +40,12 @@ export default function SignupPage() {
     <div className="flex min-h-screen items-center justify-center bg-surface p-8 dark:bg-surface-dark">
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="w-full max-w-sm">
         <div className="mb-8 flex items-center justify-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-brand shadow-glow">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary shadow-sm">
             <Warehouse className="h-4.5 w-4.5 text-white" />
           </div>
-          <span className="font-heading text-lg font-bold text-text-primary dark:text-text-primary-dark">StockFlow</span>
+          <span className="text-lg font-bold text-text-primary dark:text-text-primary-dark">StockFlow</span>
         </div>
-        <h2 className="text-center font-heading text-2xl font-bold text-text-primary dark:text-text-primary-dark">Create your account</h2>
+        <h2 className="text-center text-2xl font-bold text-text-primary dark:text-text-primary-dark">Create your account</h2>
         <p className="mt-1 text-center text-sm text-text-secondary dark:text-text-secondary-dark">Start managing your inventory today</p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">
@@ -70,7 +70,7 @@ export default function SignupPage() {
               <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full rounded-lg border border-border bg-white py-2.5 pl-9 pr-3 text-sm text-text-primary outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(79,70,229,0.1)] dark:border-border-dark dark:bg-card-dark dark:text-text-primary-dark" />
             </div>
           </div>
-          <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }} type="submit" disabled={loading} className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-brand py-2.5 text-sm font-semibold text-white shadow-glow disabled:opacity-70">
+          <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }} type="submit" disabled={loading} className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2.5 text-sm font-semibold text-white shadow-sm disabled:opacity-70">
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}
             {loading ? "Creating account..." : "Sign up"}
           </motion.button>
