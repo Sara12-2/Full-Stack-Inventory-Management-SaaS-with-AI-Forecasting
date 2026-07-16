@@ -15,7 +15,7 @@ import {
   getTopProducts,
   getRecentOrders,
   getLowStockProducts,
-} from "@/lib/mock-api";
+} from "@/lib/api";
 import { DashboardStats, RevenuePoint, TopProduct } from "@/types/dashboard";
 import { Order } from "@/types/order";
 import { Product } from "@/types/product";

@@ -8,10 +8,12 @@ import SupplierForm from "@/components/suppliers/SupplierForm";
 import ConfirmDialog from "@/components/shared/ConfirmDialog";
 import Skeleton from "@/components/ui/Skeleton";
 import EmptyState from "@/components/ui/EmptyState";
-import { getSuppliers } from "@/lib/mock-api";
+import { getSuppliers, createSupplier, updateSupplier, deleteSupplier, getErrorMessage } from "@/lib/api";
 import { Supplier } from "@/types/supplier";
+import { useToast } from "@/components/providers/ToastProvider";
 
 export default function SuppliersPage() {
+  const { showToast } = useToast();
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [search, setSearch] = useState("");
   const [formOpen, setFormOpen] = useState(false);
@@ -35,24 +37,35 @@ export default function SuppliersPage() {
 
   const filtered = suppliers.filter((s) => s.name.toLowerCase().includes(search.toLowerCase()));
 
-  const handleSave = (form: Partial<Supplier>) => {
-    if (editing) {
-      setSuppliers(suppliers.map((s) => (s.id === editing.id ? { ...s, ...form } as Supplier : s)));
-    } else {
-      const newSupplier: Supplier = {
-        id: Math.max(0, ...suppliers.map((s) => s.id)) + 1,
-        created_at: new Date().toISOString(),
-        ...form,
-      } as Supplier;
-      setSuppliers([...suppliers, newSupplier]);
+  const handleSave = async (form: Partial<Supplier>) => {
+    try {
+      if (editing) {
+        const updated = await updateSupplier(editing.id, form);
+        setSuppliers(suppliers.map((s) => (s.id === editing.id ? updated : s)));
+        showToast("success", `${updated.name} updated.`);
+      } else {
+        const created = await createSupplier(form);
+        setSuppliers([created, ...suppliers]);
+        showToast("success", `${created.name} added.`);
+      }
+      setFormOpen(false);
+      setEditing(null);
+    } catch (err) {
+      showToast("error", getErrorMessage(err));
     }
-    setFormOpen(false);
-    setEditing(null);
   };
 
-  const handleDeleteConfirm = () => {
-    if (deleting) setSuppliers(suppliers.filter((s) => s.id !== deleting.id));
-    setDeleting(null);
+  const handleDeleteConfirm = async () => {
+    if (!deleting) return;
+    try {
+      await deleteSupplier(deleting.id);
+      setSuppliers(suppliers.filter((s) => s.id !== deleting.id));
+      showToast("info", `${deleting.name} removed.`);
+    } catch (err) {
+      showToast("error", getErrorMessage(err));
+    } finally {
+      setDeleting(null);
+    }
   };
 
   return (

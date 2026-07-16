@@ -47,7 +47,7 @@ export default function StockAdjustModal({ open, product, onClose, onAdjust }: S
                 <select value={type} onChange={(e) => setType(e.target.value as MovementType)} className={inputClass}>
                   <option value="in">Stock In</option>
                   <option value="out">Stock Out</option>
-                  <option value="adjustment">Adjustment</option>
+                  <option value="adjustment">Adjustment (loss / damage)</option>
                 </select>
               </div>
               <div>

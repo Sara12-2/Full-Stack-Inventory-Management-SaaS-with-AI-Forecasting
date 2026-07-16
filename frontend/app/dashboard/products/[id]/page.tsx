@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import axios from "axios";
 import { ArrowLeft, AlertTriangle, PackageX } from "lucide-react";
-import { getProduct, getProductMovements } from "@/lib/mock-api";
+import { getProduct, getProductMovements } from "@/lib/api";
 import { Product, StockMovement } from "@/types/product";
 import StockMovementHistory from "@/components/inventory/StockMovementHistory";
 import StockBadge from "@/components/inventory/StockBadge";
@@ -23,9 +24,16 @@ export default function ProductDetailPage() {
     const id = Number(params.id);
     setLoading(true);
     setError(null);
+    setProduct(null);
     Promise.all([getProduct(id), getProductMovements(id)])
       .then(([p, m]) => { setProduct(p); setMovements(m); })
-      .catch(() => setError("Couldn't load this product. Please try again."))
+      .catch((err) => {
+        if (axios.isAxiosError(err) && err.response?.status === 404) {
+          setProduct(null);
+        } else {
+          setError("Couldn't load this product. Please try again.");
+        }
+      })
       .finally(() => setLoading(false));
   }, [params.id]);
 
