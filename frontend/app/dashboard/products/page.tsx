@@ -9,7 +9,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Skeleton from "@/components/ui/Skeleton";
 import EmptyState from "@/components/ui/EmptyState";
-import { getProducts, getCategories, getSuppliers } from "@/lib/mock-api";
+import { getProducts, getCategories, getSuppliers, createProduct, updateProduct, deleteProduct, getErrorMessage } from "@/lib/api";
 import { Product } from "@/types/product";
 import { Category } from "@/types/category";
 import { Supplier } from "@/types/supplier";
@@ -42,24 +42,35 @@ export default function ProductsPage() {
 
   const filtered = products.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()) || p.sku.toLowerCase().includes(search.toLowerCase()));
 
-  const handleSave = (form: Partial<Product>) => {
-    if (editing) {
-      setProducts(products.map((p) => (p.id === editing.id ? { ...p, ...form } as Product : p)));
-      showToast("success", `${form.name} updated.`);
-    } else {
-      setProducts([...products, { id: Math.max(0, ...products.map((p) => p.id)) + 1, created_at: new Date().toISOString(), ...form } as Product]);
-      showToast("success", `${form.name} added.`);
+  const handleSave = async (form: Partial<Product>) => {
+    try {
+      if (editing) {
+        const updated = await updateProduct(editing.id, form);
+        setProducts(products.map((p) => (p.id === editing.id ? updated : p)));
+        showToast("success", `${updated.name} updated.`);
+      } else {
+        const created = await createProduct(form);
+        setProducts([created, ...products]);
+        showToast("success", `${created.name} added.`);
+      }
+      setFormOpen(false);
+      setEditing(null);
+    } catch (err) {
+      showToast("error", getErrorMessage(err));
     }
-    setFormOpen(false);
-    setEditing(null);
   };
 
-  const handleDeleteConfirm = () => {
-    if (deleting) {
+  const handleDeleteConfirm = async () => {
+    if (!deleting) return;
+    try {
+      await deleteProduct(deleting.id);
       setProducts(products.filter((p) => p.id !== deleting.id));
       showToast("info", `${deleting.name} removed.`);
+    } catch (err) {
+      showToast("error", getErrorMessage(err));
+    } finally {
+      setDeleting(null);
     }
-    setDeleting(null);
   };
 
   return (

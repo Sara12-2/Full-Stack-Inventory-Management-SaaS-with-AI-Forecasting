@@ -57,6 +57,11 @@ export const getOrder = (id: number) => client.get(`/orders/${id}`).then((r) => 
 export const createOrder = (data: Record<string, unknown>) => client.post("/orders", data).then((r) => r.data);
 export const updateOrderStatus = (id: number, status: string) => client.put(`/orders/${id}/status`, { status }).then((r) => r.data);
 
+// ---- Customers ----
+export const getCustomers = () => client.get("/customers").then((r) => r.data);
+export const getCustomer = (id: number) => client.get(`/customers/${id}`).then((r) => r.data);
+export const createCustomer = (data: Record<string, unknown>) => client.post("/customers", data).then((r) => r.data);
+
 // ---- Dashboard ----
 export const getDashboardStats = () => client.get("/dashboard/stats").then((r) => r.data);
 export const getRevenueTrend = () => client.get("/dashboard/revenue").then((r) => r.data);

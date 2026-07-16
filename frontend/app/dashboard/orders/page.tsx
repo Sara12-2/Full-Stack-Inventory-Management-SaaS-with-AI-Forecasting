@@ -7,11 +7,13 @@ import OrderTable from "@/components/orders/OrderTable";
 import OrderForm from "@/components/orders/OrderForm";
 import Skeleton from "@/components/ui/Skeleton";
 import EmptyState from "@/components/ui/EmptyState";
-import { getOrders, getProducts } from "@/lib/mock-api";
+import { getOrders, getProducts, createOrder, getErrorMessage } from "@/lib/api";
 import { Order } from "@/types/order";
 import { Product } from "@/types/product";
+import { useToast } from "@/components/providers/ToastProvider";
 
 export default function OrdersPage() {
+  const { showToast } = useToast();
   const [orders, setOrders] = useState<Order[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState("");
@@ -38,49 +40,24 @@ export default function OrdersPage() {
       o.customer_name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const handleSave = (data: {
+  const handleSave = async (data: {
     customer_name: string;
     customer_email: string;
     customer_phone: string;
     items: { product_id: number; quantity: number }[];
   }) => {
-    const items = data.items.map((item, idx) => {
-      const product = products.find((p) => p.id === item.product_id);
-      const unit_price = product?.price || 0;
-      return {
-        id: idx + 1,
-        order_id: 0,
-        product_id: item.product_id,
-        product_name: product?.name,
-        quantity: item.quantity,
-        unit_price,
-        total_price: unit_price * item.quantity,
-      };
-    });
-    const total_amount = items.reduce((sum, i) => sum + i.total_price, 0);
-
-    const newOrder: Order = {
-      id: Math.max(0, ...orders.map((o) => o.id)) + 1,
-      order_number: `ORD-${1000 + orders.length + 1}`,
-      customer_name: data.customer_name,
-      customer_email: data.customer_email,
-      customer_phone: data.customer_phone,
-      total_amount,
-      status: "pending",
-      created_at: new Date().toISOString(),
-      items,
-    };
-
-    // Auto-deduct stock on order creation
-    setProducts(
-      products.map((p) => {
-        const item = data.items.find((i) => i.product_id === p.id);
-        return item ? { ...p, stock_quantity: Math.max(0, p.stock_quantity - item.quantity) } : p;
-      })
-    );
-
-    setOrders([newOrder, ...orders]);
-    setFormOpen(false);
+    try {
+      const newOrder = await createOrder(data);
+      setOrders([newOrder, ...orders]);
+      // Stock was deducted server-side; refresh products so the Orders form
+      // (and anywhere else on this page) reflects current stock levels.
+      const freshProducts = await getProducts();
+      setProducts(freshProducts);
+      showToast("success", `Order ${newOrder.order_number} created.`);
+      setFormOpen(false);
+    } catch (err) {
+      showToast("error", getErrorMessage(err));
+    }
   };
 
   return (

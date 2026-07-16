@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import axios from "axios";
 import { ArrowLeft, AlertTriangle, UserX } from "lucide-react";
-import { getCustomer } from "@/lib/mock-api";
+import { getCustomer } from "@/lib/api";
 import { Customer } from "@/types/customer";
 import EmptyState from "@/components/ui/EmptyState";
 import { formatCurrency, formatDate } from "@/lib/utils";
@@ -18,9 +19,16 @@ export default function CustomerDetailPage() {
   const load = useCallback(() => {
     setLoading(true);
     setError(null);
+    setCustomer(null);
     getCustomer(Number(params.id))
       .then(setCustomer)
-      .catch(() => setError("Couldn't load this customer. Please try again."))
+      .catch((err) => {
+        if (axios.isAxiosError(err) && err.response?.status === 404) {
+          setCustomer(null);
+        } else {
+          setError("Couldn't load this customer. Please try again.");
+        }
+      })
       .finally(() => setLoading(false));
   }, [params.id]);
 

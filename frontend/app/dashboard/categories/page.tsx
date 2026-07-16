@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { AlertTriangle } from "lucide-react";
-import { getCategories } from "@/lib/mock-api";
+import { getCategories } from "@/lib/api";
 import { Category } from "@/types/category";
 import DataTable, { Column } from "@/components/shared/DataTable";
 import Skeleton from "@/components/ui/Skeleton";

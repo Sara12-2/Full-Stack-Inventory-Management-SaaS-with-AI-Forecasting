@@ -7,7 +7,7 @@ import CustomerTable from "@/components/customers/CustomerTable";
 import CustomerForm from "@/components/customers/CustomerForm";
 import Skeleton from "@/components/ui/Skeleton";
 import EmptyState from "@/components/ui/EmptyState";
-import { getCustomers } from "@/lib/mock-api";
+import { getCustomers, createCustomer, getErrorMessage } from "@/lib/api";
 import { Customer } from "@/types/customer";
 import { useToast } from "@/components/providers/ToastProvider";
 
@@ -35,21 +35,16 @@ export default function CustomersPage() {
 
   const filtered = customers.filter((c) => c.name.toLowerCase().includes(search.toLowerCase()));
 
-  const handleSave = (form: Partial<Customer>) => {
-    if (editing) {
-      setCustomers(customers.map((c) => (c.id === editing.id ? { ...c, ...form } as Customer : c)));
-      showToast("success", `${form.name} updated.`);
-    } else {
-      const newCustomer: Customer = {
-        id: Math.max(0, ...customers.map((c) => c.id)) + 1,
-        total_orders: 0, total_spent: 0, created_at: new Date().toISOString(),
-        ...form,
-      } as Customer;
-      setCustomers([...customers, newCustomer]);
-      showToast("success", `${form.name} added.`);
+  const handleSave = async (form: Partial<Customer>) => {
+    try {
+      const created = await createCustomer(form);
+      setCustomers([created, ...customers]);
+      showToast("success", `${created.name} added.`);
+      setFormOpen(false);
+      setEditing(null);
+    } catch (err) {
+      showToast("error", getErrorMessage(err));
     }
-    setFormOpen(false);
-    setEditing(null);
   };
 
   return (

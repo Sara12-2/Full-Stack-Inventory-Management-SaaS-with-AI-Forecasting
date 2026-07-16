@@ -2,16 +2,19 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import axios from "axios";
 import { ArrowLeft, AlertTriangle, PackageX } from "lucide-react";
-import { getOrder } from "@/lib/mock-api";
+import { getOrder, updateOrderStatus, getErrorMessage } from "@/lib/api";
 import { Order, OrderStatus } from "@/types/order";
 import OrderDetail from "@/components/orders/OrderDetail";
 import EmptyState from "@/components/ui/EmptyState";
 import Skeleton from "@/components/ui/Skeleton";
+import { useToast } from "@/components/providers/ToastProvider";
 
 export default function OrderDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const { showToast } = useToast();
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -19,9 +22,16 @@ export default function OrderDetailPage() {
   const load = useCallback(() => {
     setLoading(true);
     setError(null);
+    setOrder(null);
     getOrder(Number(params.id))
       .then(setOrder)
-      .catch(() => setError("Couldn't load this order. Please try again."))
+      .catch((err) => {
+        if (axios.isAxiosError(err) && err.response?.status === 404) {
+          setOrder(null);
+        } else {
+          setError("Couldn't load this order. Please try again.");
+        }
+      })
       .finally(() => setLoading(false));
   }, [params.id]);
 
@@ -46,9 +56,14 @@ export default function OrderDetailPage() {
     return <EmptyState icon={PackageX} title="Order not found" description="This order may have been removed." actionLabel="Back to orders" onAction={() => router.push("/dashboard/orders")} />;
   }
 
-  const handleStatusChange = (status: OrderStatus) => {
-    setOrder({ ...order, status });
-    // NOTE: cancelling here should restore stock once backend logic exists.
+  const handleStatusChange = async (status: OrderStatus) => {
+    try {
+      const updated = await updateOrderStatus(order.id, status);
+      setOrder(updated);
+      showToast("success", `Order marked as ${status}.`);
+    } catch (err) {
+      showToast("error", getErrorMessage(err));
+    }
   };
 
   return (

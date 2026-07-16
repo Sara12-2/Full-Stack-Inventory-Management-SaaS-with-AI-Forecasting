@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Mail, Lock, Loader2, Eye, EyeOff } from "lucide-react";
-import { saveToken } from "@/lib/auth";
+import { saveToken, saveUser } from "@/lib/auth";
+import { login, getErrorMessage } from "@/lib/api";
 import { useToast } from "@/components/providers/ToastProvider";
 
 export default function LoginForm() {
@@ -28,20 +29,23 @@ export default function LoginForm() {
       return;
     }
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 500));
-    saveToken("mock-token");
-    showToast("success", "Welcome back.");
-    router.push("/dashboard");
+    try {
+      const { token, user } = await login(email, password);
+      saveToken(token);
+      saveUser(user);
+      showToast("success", "Welcome back.");
+      router.push("/dashboard");
+    } catch (err) {
+      showToast("error", getErrorMessage(err));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="w-full max-w-sm">
       <h2 className="text-xl font-semibold text-[var(--color-text)]">Sign in</h2>
       <p className="mt-1 text-sm text-[var(--color-text-secondary)]">Welcome back to StockFlow</p>
-
-      <div className="mt-4 rounded-lg border border-[#0D9479]/25 bg-[#0D9479]/10 px-3 py-2 text-xs text-[#0D9479]">
-        Phase 1 demo — any email and password will work.
-      </div>
 
       <form onSubmit={handleSubmit} noValidate className="mt-6 space-y-4">
         <div>

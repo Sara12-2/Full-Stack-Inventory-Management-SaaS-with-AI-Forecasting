@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { getProducts } from "@/lib/mock-api";
+import { getProducts, adjustStock, getErrorMessage } from "@/lib/api";
 import { Product, MovementType } from "@/types/product";
 import DataTable, { Column } from "@/components/shared/DataTable";
 import StockBadge from "@/components/inventory/StockBadge";
@@ -10,8 +10,10 @@ import SearchInput from "@/components/shared/SearchInput";
 import Skeleton from "@/components/ui/Skeleton";
 import EmptyState from "@/components/ui/EmptyState";
 import { Settings2, AlertTriangle } from "lucide-react";
+import { useToast } from "@/components/providers/ToastProvider";
 
 export default function InventoryPage() {
+  const { showToast } = useToast();
   const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState("");
   const [adjusting, setAdjusting] = useState<Product | null>(null);
@@ -33,15 +35,16 @@ export default function InventoryPage() {
 
   const filtered = products.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
 
-  const handleAdjust = (productId: number, type: MovementType, quantity: number) => {
-    setProducts(
-      products.map((p) => {
-        if (p.id !== productId) return p;
-        const delta = type === "out" ? -quantity : quantity;
-        return { ...p, stock_quantity: Math.max(0, p.stock_quantity + delta) };
-      })
-    );
-    setAdjusting(null);
+  const handleAdjust = async (productId: number, type: MovementType, quantity: number, reason: string) => {
+    try {
+      const { product } = await adjustStock(productId, type, quantity, reason);
+      setProducts(products.map((p) => (p.id === productId ? product : p)));
+      showToast("success", `${product.name} stock updated.`);
+    } catch (err) {
+      showToast("error", getErrorMessage(err));
+    } finally {
+      setAdjusting(null);
+    }
   };
 
   const columns: Column<Product>[] = [

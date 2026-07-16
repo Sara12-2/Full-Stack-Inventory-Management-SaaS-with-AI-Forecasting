@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { User, Mail, Lock, Loader2, Eye, EyeOff } from "lucide-react";
-import { saveToken } from "@/lib/auth";
+import { saveToken, saveUser } from "@/lib/auth";
+import { signup, getErrorMessage } from "@/lib/api";
 import { useToast } from "@/components/providers/ToastProvider";
 
 export default function SignupForm() {
@@ -23,16 +24,24 @@ export default function SignupForm() {
     if (!name) errors.name = "Name is required.";
     if (!email) errors.email = "Email is required.";
     if (!password) errors.password = "Password is required.";
+    else if (password.length < 8) errors.password = "Password must be at least 8 characters.";
     setFieldErrors(errors);
     if (Object.keys(errors).length > 0) {
       showToast("error", "Please fill in all fields.");
       return;
     }
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 500));
-    saveToken("mock-token");
-    showToast("success", "Account created — welcome to StockFlow!");
-    router.push("/dashboard");
+    try {
+      const { token, user } = await signup(name, email, password);
+      saveToken(token);
+      saveUser(user);
+      showToast("success", "Account created — welcome to StockFlow!");
+      router.push("/dashboard");
+    } catch (err) {
+      showToast("error", getErrorMessage(err));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
