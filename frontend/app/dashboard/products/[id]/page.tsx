@@ -4,19 +4,28 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { ArrowLeft, AlertTriangle, PackageX } from "lucide-react";
-import { getProduct, getProductMovements } from "@/lib/api";
+import { getProduct, getProductMovements, getProductForecast } from "@/lib/api";
 import { Product, StockMovement } from "@/types/product";
 import StockMovementHistory from "@/components/inventory/StockMovementHistory";
 import StockBadge from "@/components/inventory/StockBadge";
+import ForecastChart from "@/components/ai/ForecastChart";
 import EmptyState from "@/components/ui/EmptyState";
 import Skeleton from "@/components/ui/Skeleton";
 import { formatCurrency, formatDate } from "@/lib/utils";
+
+interface Forecast {
+  history: { week_start: string; units_sold: number }[];
+  forecast: { period: string; units: number }[];
+  insight: string;
+}
 
 export default function ProductDetailPage() {
   const params = useParams();
   const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
   const [movements, setMovements] = useState<StockMovement[]>([]);
+  const [forecast, setForecast] = useState<Forecast | null>(null);
+  const [forecastLoading, setForecastLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,6 +44,15 @@ export default function ProductDetailPage() {
         }
       })
       .finally(() => setLoading(false));
+
+    // Forecasting calls Gemini server-side, which is slower than the plain
+    // CRUD calls above -- loaded independently so it never blocks the rest
+    // of the page, and a failure here doesn't affect the page's own state.
+    setForecastLoading(true);
+    getProductForecast(id)
+      .then(setForecast)
+      .catch(() => setForecast(null))
+      .finally(() => setForecastLoading(false));
   }, [params.id]);
 
   useEffect(() => {
@@ -92,6 +110,12 @@ export default function ProductDetailPage() {
           </div>
         </div>
       </div>
+
+      {forecastLoading ? (
+        <Skeleton className="h-64 w-full" />
+      ) : forecast ? (
+        <ForecastChart history={forecast.history} forecast={forecast.forecast} insight={forecast.insight} />
+      ) : null}
 
       <StockMovementHistory movements={movements} />
     </div>

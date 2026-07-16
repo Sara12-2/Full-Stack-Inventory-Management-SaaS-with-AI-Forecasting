@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 from marshmallow import ValidationError
 
+from app.ai.forecasting import generate_insight, get_weekly_sales, linear_forecast
 from app.extensions import db
 from app.models import Product, StockMovement
 from app.schemas.product_schema import ProductSchema
@@ -95,3 +96,22 @@ def get_product_movements(product_id):
         .all()
     )
     return jsonify([m.to_dict() for m in movements]), 200
+
+
+@products_bp.get("/<int:product_id>/forecast")
+@jwt_required()
+def get_product_forecast(product_id):
+    product = db.session.get(Product, product_id)
+    if not product:
+        return jsonify(error="Product not found."), 404
+
+    history = get_weekly_sales(product_id, weeks=8)
+    forecast_values = linear_forecast(history, periods_ahead=4)
+    insight = generate_insight(product.name, history, forecast_values)
+
+    return jsonify(
+        product_id=product_id,
+        history=history,
+        forecast=[{"period": f"Week +{i + 1}", "units": v} for i, v in enumerate(forecast_values)],
+        insight=insight,
+    ), 200

@@ -36,6 +36,7 @@ export const createProduct = (data: Record<string, unknown>) => client.post("/pr
 export const updateProduct = (id: number, data: Record<string, unknown>) => client.put(`/products/${id}`, data).then((r) => r.data);
 export const deleteProduct = (id: number) => client.delete(`/products/${id}`).then((r) => r.data);
 export const getProductMovements = (productId: number) => client.get(`/products/${productId}/movements`).then((r) => r.data);
+export const getProductForecast = (productId: number) => client.get(`/products/${productId}/forecast`).then((r) => r.data);
 
 // ---- Categories ----
 export const getCategories = () => client.get("/categories").then((r) => r.data);
