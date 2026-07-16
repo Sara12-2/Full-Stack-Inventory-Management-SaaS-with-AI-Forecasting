@@ -166,9 +166,5 @@ workbox-*.js
 .coverage
 .nyc_output
 
-# GitHub
-.github/
-*.github
-
 # PNPM
 .pnpm-store/
