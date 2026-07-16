@@ -151,14 +151,20 @@
     border-radius: 4px;
   }
 
-  /* ===== Links ===== */
-  a {
+  /* ===== Links =====
+     :where() keeps this rule's specificity at zero, so any Tailwind
+     utility class (e.g. text-white on a button-styled <Link>) can
+     override it without needing a hover: variant. Without :where(),
+     a:hover's (element + pseudo-class) specificity beats a plain
+     class like .text-white, which silently turned CTA button text
+     the same green as its hover background -- invisible text. */
+  :where(a) {
     color: var(--color-primary);
     text-decoration: none;
     transition: color 150ms ease;
   }
 
-  a:hover {
+  :where(a:hover) {
     color: var(--color-primary-hover);
   }
 

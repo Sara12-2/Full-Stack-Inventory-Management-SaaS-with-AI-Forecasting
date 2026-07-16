@@ -27,13 +27,14 @@ export default function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-3 border-b border-border bg-card px-4 dark:border-border-dark dark:bg-card-dark sm:px-6">
       <div className="flex min-w-0 flex-1 items-center gap-3">
-        <button onClick={onMenuClick} className="shrink-0 rounded-lg p-1.5 text-text-secondary hover:bg-neutral-100 dark:text-text-secondary-dark dark:hover:bg-white/5 md:hidden">
+        <button onClick={onMenuClick} aria-label="Open menu" className="shrink-0 rounded-lg p-1.5 text-text-secondary hover:bg-neutral-100 dark:text-text-secondary-dark dark:hover:bg-white/5 md:hidden">
           <Menu className="h-[18px] w-[18px]" />
         </button>
         <div className="relative w-full max-w-sm">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-secondary dark:text-text-secondary-dark" />
+          <Search aria-hidden="true" className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-secondary dark:text-text-secondary-dark" />
           <input
             type="text"
+            aria-label="Search"
             placeholder="Search..."
             className="w-full rounded-lg border border-border bg-surface py-1.5 pl-9 pr-3 text-sm text-text-primary outline-none transition-shadow focus:border-primary focus:bg-card focus:shadow-[0_0_0_3px_rgba(13,148,121,0.12)] dark:border-border-dark dark:bg-surface-dark dark:text-text-primary-dark dark:focus:bg-card-dark"
           />
@@ -41,15 +42,15 @@ export default function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
       </div>
 
       <div className="flex shrink-0 items-center gap-1">
-        <button onClick={() => setTheme(isDark ? "light" : "dark")} className="rounded-lg p-2 text-text-secondary hover:bg-neutral-100 dark:text-text-secondary-dark dark:hover:bg-white/5">
+        <button onClick={() => setTheme(isDark ? "light" : "dark")} aria-label="Toggle theme" className="rounded-lg p-2 text-text-secondary hover:bg-neutral-100 dark:text-text-secondary-dark dark:hover:bg-white/5">
           {isDark ? <Moon className="h-[17px] w-[17px]" /> : <Sun className="h-[17px] w-[17px]" />}
         </button>
-        <button className="relative hidden rounded-lg p-2 text-text-secondary hover:bg-neutral-100 dark:text-text-secondary-dark dark:hover:bg-white/5 sm:block">
+        <button aria-label="Notifications" className="relative hidden rounded-lg p-2 text-text-secondary hover:bg-neutral-100 dark:text-text-secondary-dark dark:hover:bg-white/5 sm:block">
           <Bell className="h-[17px] w-[17px]" />
           <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-danger" />
         </button>
         <div className="relative">
-          <button onClick={() => setDropdownOpen(!dropdownOpen)} className="flex items-center gap-1.5 rounded-lg py-1 pl-1 pr-1.5 hover:bg-neutral-100 dark:hover:bg-white/5 sm:pr-2">
+          <button onClick={() => setDropdownOpen(!dropdownOpen)} aria-label="User menu" aria-expanded={dropdownOpen} className="flex items-center gap-1.5 rounded-lg py-1 pl-1 pr-1.5 hover:bg-neutral-100 dark:hover:bg-white/5 sm:pr-2">
             <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-medium text-white">SM</div>
             <ChevronDown className="hidden h-3.5 w-3.5 text-text-secondary dark:text-text-secondary-dark sm:block" />
           </button>
