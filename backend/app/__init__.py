@@ -52,6 +52,7 @@ def create_app(env=None):
     from app.routes.inventory import inventory_bp
     from app.routes.orders import orders_bp
     from app.routes.products import products_bp
+    from app.routes.reports import reports_bp
     from app.routes.suppliers import suppliers_bp
 
     app.register_blueprint(health_bp, url_prefix="/api")
@@ -63,5 +64,6 @@ def create_app(env=None):
     app.register_blueprint(orders_bp, url_prefix="/api/orders")
     app.register_blueprint(customers_bp, url_prefix="/api/customers")
     app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
+    app.register_blueprint(reports_bp, url_prefix="/api/reports")
 
     return app

@@ -64,4 +64,20 @@ export const getTopProducts = () => client.get("/dashboard/top-products").then((
 export const getRecentOrders = () => client.get("/dashboard/recent-orders").then((r) => r.data);
 export const getLowStockProducts = () => client.get("/dashboard/low-stock").then((r) => r.data);
 
+// ---- Reports ----
+export type ReportType = "inventory" | "orders" | "revenue" | "movements";
+
+export async function downloadReport(reportType: ReportType): Promise<void> {
+  const response = await client.get(`/reports/${reportType}`, { responseType: "blob" });
+  const blob = new Blob([response.data], { type: "text/csv" });
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `${reportType}_report.csv`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.URL.revokeObjectURL(url);
+}
+
 export default client;
