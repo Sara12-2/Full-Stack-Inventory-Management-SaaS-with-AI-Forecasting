@@ -86,4 +86,8 @@ export async function downloadReport(reportType: ReportType): Promise<void> {
   window.URL.revokeObjectURL(url);
 }
 
+// ---- AI Assistant ----
+export const askAssistant = (message: string, history: { role: string; content: string }[] = []) =>
+  client.post("/ai/chat", { message, history }).then((r) => r.data);
+
 export default client;
