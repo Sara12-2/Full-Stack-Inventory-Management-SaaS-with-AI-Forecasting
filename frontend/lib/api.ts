@@ -51,6 +51,7 @@ export const deleteSupplier = (id: number) => client.delete(`/suppliers/${id}`).
 // ---- Inventory ----
 export const adjustStock = (productId: number, movementType: string, quantity: number, reason: string) =>
   client.post("/inventory/adjust", { product_id: productId, movement_type: movementType, quantity, reason }).then((r) => r.data);
+export const getRestockRecommendations = () => client.get("/inventory/recommendations").then((r) => r.data);
 
 // ---- Orders ----
 export const getOrders = () => client.get("/orders").then((r) => r.data);

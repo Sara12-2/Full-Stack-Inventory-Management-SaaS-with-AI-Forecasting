@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from marshmallow import Schema, ValidationError, fields, validate
 
+from app.ai.restock_recommender import generate_summary, get_all_recommendations
 from app.extensions import db
 from app.models import Product, StockMovement
 from app.models.stock_movement import MOVEMENT_TYPES
@@ -64,3 +65,11 @@ def adjust_stock():
         emit_low_stock_alert(product)
 
     return jsonify(product=product.to_dict(), movement=movement.to_dict()), 200
+
+
+@inventory_bp.get("/recommendations")
+@jwt_required()
+def get_recommendations():
+    recommendations = get_all_recommendations()
+    summary = generate_summary(recommendations)
+    return jsonify(recommendations=recommendations, summary=summary), 200
