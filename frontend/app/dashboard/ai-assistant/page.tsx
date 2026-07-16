@@ -1,18 +1,23 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, Square, Sparkles, Lock } from "lucide-react";
+import { Send, Square, Sparkles } from "lucide-react";
 import ConversationSidebar from "@/components/ai/ConversationSidebar";
 import ChatMessageBubble from "@/components/ai/ChatMessage";
 import ThinkingIndicator from "@/components/ai/ThinkingIndicator";
 import EmptyState from "@/components/ui/EmptyState";
 import Button from "@/components/ui/Button";
 import { ChatMessage, Conversation } from "@/types/dashboard";
+import { askAssistant, getErrorMessage } from "@/lib/api";
+import { useToast } from "@/components/providers/ToastProvider";
 
-const mockConversations: Conversation[] = [
-  { id: 1, title: "Which products need restocking?", updatedAt: "2026-07-14" },
-  { id: 2, title: "Best sellers last month", updatedAt: "2026-07-12" },
-];
+// Conversations live in React state only (not persisted server-side) --
+// switching between them and starting new ones works within a session, but
+// history doesn't survive a page refresh. Full server-side persistence
+// wasn't part of this phase's scope.
+interface LocalConversation extends Conversation {
+  messages: ChatMessage[];
+}
 
 const suggestedPrompts = [
   "Which products need restocking soon?",
@@ -20,31 +25,64 @@ const suggestedPrompts = [
   "How much stock should I reorder for Bluetooth Speaker?",
 ];
 
-const STUB_REPLY =
-  "This is a UI preview only — the AI Assistant isn't connected to a real model or your live data yet. This response is a placeholder for Phase 3.";
-
 export default function AIAssistantPage() {
-  const [conversations] = useState<Conversation[]>(mockConversations);
+  const { showToast } = useToast();
+  const [conversations, setConversations] = useState<LocalConversation[]>([]);
   const [activeId, setActiveId] = useState<number | null>(null);
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [thinking, setThinking] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  const active = conversations.find((c) => c.id === activeId) || null;
+  const messages = active?.messages || [];
+
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
-  }, [messages, thinking]);
+    // messages is a new array reference on every render (derived from
+    // conversations.find(...) above); depending on its length instead of
+    // the array itself avoids re-running this effect on unrelated renders.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages.length, thinking]);
 
-  const sendMessage = (text: string) => {
-    if (!text.trim()) return;
+  const sendMessage = async (text: string) => {
+    if (!text.trim() || thinking) return;
     const userMsg: ChatMessage = { id: Date.now(), role: "user", content: text, createdAt: new Date().toISOString() };
-    setMessages((prev) => [...prev, userMsg]);
+
+    let conversationId = activeId;
+    let priorMessages: ChatMessage[] = [];
+
+    if (conversationId == null) {
+      conversationId = Date.now();
+      const newConversation: LocalConversation = {
+        id: conversationId,
+        title: text.slice(0, 60),
+        updatedAt: new Date().toISOString(),
+        messages: [userMsg],
+      };
+      setConversations((prev) => [newConversation, ...prev]);
+      setActiveId(conversationId);
+    } else {
+      priorMessages = conversations.find((c) => c.id === conversationId)?.messages || [];
+      const id = conversationId;
+      setConversations((prev) =>
+        prev.map((c) => (c.id === id ? { ...c, messages: [...c.messages, userMsg], updatedAt: new Date().toISOString() } : c))
+      );
+    }
+
     setInput("");
     setThinking(true);
-    setTimeout(() => {
+
+    const id = conversationId;
+    try {
+      const history = priorMessages.map((m) => ({ role: m.role, content: m.content }));
+      const { reply } = await askAssistant(text, history);
+      const assistantMsg: ChatMessage = { id: Date.now() + 1, role: "assistant", content: reply, createdAt: new Date().toISOString() };
+      setConversations((prev) => prev.map((c) => (c.id === id ? { ...c, messages: [...c.messages, assistantMsg] } : c)));
+    } catch (err) {
+      showToast("error", getErrorMessage(err));
+    } finally {
       setThinking(false);
-      setMessages((prev) => [...prev, { id: Date.now() + 1, role: "assistant", content: STUB_REPLY, createdAt: new Date().toISOString() }]);
-    }, 1200);
+    }
   };
 
   return (
@@ -53,7 +91,7 @@ export default function AIAssistantPage() {
         conversations={conversations}
         activeId={activeId}
         onSelect={setActiveId}
-        onNew={() => { setActiveId(null); setMessages([]); }}
+        onNew={() => setActiveId(null)}
       />
 
       <div className="flex flex-1 flex-col">
@@ -61,9 +99,6 @@ export default function AIAssistantPage() {
           <h1 className="flex items-center gap-2 text-sm font-semibold text-text-primary dark:text-text-primary-dark">
             <Sparkles className="h-4 w-4 text-primary" /> AI Assistant
           </h1>
-          <span className="flex items-center gap-1.5 rounded-md border border-warning/30 bg-warning-light px-2 py-1 text-xs font-medium text-warning dark:bg-warning/10">
-            <Lock className="h-3 w-3" /> Preview
-          </span>
         </div>
 
         <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto px-4 py-6 sm:px-6">
@@ -72,7 +107,7 @@ export default function AIAssistantPage() {
               <EmptyState
                 icon={Sparkles}
                 title="Ask about your inventory"
-                description="Get answers about stock levels, sales, and restocking — once connected to your live data in Phase 3."
+                description="Get answers about stock levels, sales, and restocking based on your live data."
               />
               <div className="mt-2 flex w-full max-w-md flex-col gap-2">
                 {suggestedPrompts.map((p) => (
@@ -107,7 +142,7 @@ export default function AIAssistantPage() {
               className="max-h-32 flex-1 resize-none bg-transparent px-2 py-1.5 text-sm text-text-primary outline-none dark:text-text-primary-dark"
             />
             {thinking ? (
-              <Button size="icon" variant="secondary" onClick={() => setThinking(false)}>
+              <Button size="icon" variant="secondary" disabled>
                 <Square className="h-4 w-4" />
               </Button>
             ) : (
@@ -116,9 +151,6 @@ export default function AIAssistantPage() {
               </Button>
             )}
           </div>
-          <p className="mt-2 text-center text-xs text-text-secondary dark:text-text-secondary-dark">
-            Phase 3 preview — responses are placeholders, not real AI output.
-          </p>
         </div>
       </div>
     </div>

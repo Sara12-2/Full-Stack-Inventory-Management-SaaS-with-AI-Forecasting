@@ -44,6 +44,7 @@ def create_app(env=None):
 
     from app import models  # noqa: F401 -- registers models with SQLAlchemy metadata
     from app.sockets import alerts  # noqa: F401 -- registers socketio event handlers
+    from app.routes.ai import ai_bp
     from app.routes.auth import auth_bp
     from app.routes.categories import categories_bp
     from app.routes.customers import customers_bp
@@ -65,5 +66,6 @@ def create_app(env=None):
     app.register_blueprint(customers_bp, url_prefix="/api/customers")
     app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
     app.register_blueprint(reports_bp, url_prefix="/api/reports")
+    app.register_blueprint(ai_bp, url_prefix="/api/ai")
 
     return app
