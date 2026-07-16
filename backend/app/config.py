@@ -1,5 +1,13 @@
 import os
 
+from dotenv import load_dotenv
+
+# Loads backend/.env (or a parent-directory .env, e.g. the repo root) into
+# os.environ for local/manual runs. In Docker Compose, env vars are already
+# injected via env_file/environment: so this is a no-op there -- it never
+# overrides a variable that's already set.
+load_dotenv()
+
 
 class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-change-me")
