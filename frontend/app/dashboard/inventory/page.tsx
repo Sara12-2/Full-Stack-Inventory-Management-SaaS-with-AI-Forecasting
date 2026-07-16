@@ -1,16 +1,29 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { getProducts, adjustStock, getErrorMessage } from "@/lib/api";
+import { getProducts, adjustStock, getRestockRecommendations, getErrorMessage } from "@/lib/api";
 import { Product, MovementType } from "@/types/product";
 import DataTable, { Column } from "@/components/shared/DataTable";
 import StockBadge from "@/components/inventory/StockBadge";
 import StockAdjustModal from "@/components/inventory/StockAdjustModal";
+import RestockRecommendations from "@/components/ai/RestockRecommendations";
 import SearchInput from "@/components/shared/SearchInput";
 import Skeleton from "@/components/ui/Skeleton";
 import EmptyState from "@/components/ui/EmptyState";
 import { Settings2, AlertTriangle } from "lucide-react";
 import { useToast } from "@/components/providers/ToastProvider";
+
+interface Recommendations {
+  recommendations: {
+    product_id: number;
+    product_name: string;
+    current_stock: number;
+    avg_weekly_sales: number;
+    coverage_weeks: number;
+    recommended_quantity: number;
+  }[];
+  summary: string;
+}
 
 export default function InventoryPage() {
   const { showToast } = useToast();
@@ -19,6 +32,8 @@ export default function InventoryPage() {
   const [adjusting, setAdjusting] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [recommendations, setRecommendations] = useState<Recommendations | null>(null);
+  const [recommendationsLoading, setRecommendationsLoading] = useState(true);
 
   const load = useCallback(() => {
     setLoading(true);
@@ -27,6 +42,15 @@ export default function InventoryPage() {
       .then(setProducts)
       .catch(() => setError("Couldn't load inventory. Please try again."))
       .finally(() => setLoading(false));
+
+    // Loaded independently -- it calls Gemini server-side, which is slower
+    // than the plain product list, and a failure here shouldn't block the
+    // rest of the page.
+    setRecommendationsLoading(true);
+    getRestockRecommendations()
+      .then(setRecommendations)
+      .catch(() => setRecommendations(null))
+      .finally(() => setRecommendationsLoading(false));
   }, []);
 
   useEffect(() => {
@@ -65,6 +89,13 @@ export default function InventoryPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-xl font-bold text-text-primary dark:text-text-primary-dark">Inventory</h1>
+
+      {recommendationsLoading ? (
+        <Skeleton className="h-40 w-full" />
+      ) : recommendations ? (
+        <RestockRecommendations recommendations={recommendations.recommendations} summary={recommendations.summary} />
+      ) : null}
+
       <SearchInput value={search} onChange={setSearch} placeholder="Search products..." />
 
       {loading ? (
