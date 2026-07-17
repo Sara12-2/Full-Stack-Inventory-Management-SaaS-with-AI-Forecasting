@@ -81,7 +81,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 <br>
 ## 📸 Screenshots
 
-> All screenshots live in `docs/screenshots/`
+> All screenshots live in `docs/screenshots/` and show both light and dark modes.
 
 ---
 
@@ -195,6 +195,12 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
+### 19. 📱 Footer Page
+
+![Footer Light](docs/screenshots/footer-light.png)
+
+---
+
 ## 🌙 Dark Mode Screenshots
 
 ### 1. 🏠 Home Page (Dark)
@@ -211,7 +217,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ### 3. 📄 About Page (Dark Continued)
 
-![About Dark 2](docs/screenshots/About-dark-part-2.png)
+![About Dark 2](docs/screenshots/about-dark-part-2.png)
 
 ---
 
@@ -285,6 +291,13 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ![AI Assistant Dark](docs/screenshots/ai-assistant-dark.png)
 
+---
+
+### 16. 📱 Footer Page (Dark)
+
+![Footer Dark](docs/screenshots/footer-dark.png)
+
+---
 ---
 ---
 ---
