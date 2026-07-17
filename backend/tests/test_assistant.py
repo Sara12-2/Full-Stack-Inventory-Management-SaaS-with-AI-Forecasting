@@ -18,12 +18,12 @@ def test_chat_missing_message_rejected(client, admin_headers):
 
 
 def test_chat_no_api_key_degrades_gracefully(client, admin_headers):
-    # Test env has no GEMINI_API_KEY -- must still return 200 with a clear
-    # placeholder reply instead of crashing or hanging trying to reach Gemini.
+    # Test env has no GROQ_API_KEY -- must still return 200 with a clear
+    # placeholder reply instead of crashing or hanging trying to reach Groq.
     resp = client.post("/api/ai/chat", headers=admin_headers, json={"message": "Which products need restocking?"})
     assert resp.status_code == 200
     data = resp.get_json()
-    assert "GEMINI_API_KEY" in data["reply"]
+    assert "GROQ_API_KEY" in data["reply"]
 
 
 def test_chat_accepts_conversation_history(client, admin_headers):

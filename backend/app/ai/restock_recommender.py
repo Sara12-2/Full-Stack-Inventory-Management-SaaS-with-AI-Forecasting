@@ -56,22 +56,21 @@ def get_all_recommendations():
 
 
 def generate_summary(recommendations):
-    """A short Gemini-generated prioritization across the whole list -- one
+    """A short Groq-generated prioritization across the whole list -- one
     call regardless of list size, not one per product. Degrades gracefully
     (never raises) if no API key is configured or the call fails.
     """
     if not recommendations:
         return "No products currently need reordering based on recent sales velocity."
 
-    api_key = current_app.config.get("GEMINI_API_KEY")
+    api_key = current_app.config.get("GROQ_API_KEY")
     if not api_key:
-        return "AI summary unavailable — set GEMINI_API_KEY to enable prioritized recommendations."
+        return "AI summary unavailable — set GROQ_API_KEY to enable prioritized recommendations."
 
     try:
-        import google.generativeai as genai
+        from groq import Groq
 
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        client = Groq(api_key=api_key)
 
         lines = [
             f"{r['product_name']}: {r['current_stock']} in stock, selling ~{r['avg_weekly_sales']}/week, "
@@ -84,8 +83,12 @@ def generate_summary(recommendations):
             + "\n\nIn 2-3 sentences, summarize the overall situation and call out the single "
             "highest-priority item to reorder first, with a concrete reason from the numbers."
         )
-        response = model.generate_content(prompt)
-        return response.text.strip()
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.3,
+        )
+        return response.choices[0].message.content.strip()
     except Exception as exc:
-        current_app.logger.warning("Gemini restock summary failed: %s", exc)
+        current_app.logger.warning("Groq restock summary failed: %s", exc)
         return "AI summary temporarily unavailable. Recommended quantities above are still accurate."

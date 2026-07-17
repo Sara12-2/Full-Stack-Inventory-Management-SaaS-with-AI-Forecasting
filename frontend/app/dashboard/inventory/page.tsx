@@ -43,7 +43,7 @@ export default function InventoryPage() {
       .catch(() => setError("Couldn't load inventory. Please try again."))
       .finally(() => setLoading(false));
 
-    // Loaded independently -- it calls Gemini server-side, which is slower
+    // Loaded independently -- it calls Groq server-side, which is slower
     // than the plain product list, and a failure here shouldn't block the
     // rest of the page.
     setRecommendationsLoading(true);

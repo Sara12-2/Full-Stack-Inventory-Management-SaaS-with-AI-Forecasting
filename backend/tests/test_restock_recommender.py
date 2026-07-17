@@ -59,7 +59,7 @@ def test_recommendations_endpoint_no_api_key_degrades_gracefully(client, admin_h
     assert resp.status_code == 200
     data = resp.get_json()
     assert len(data["recommendations"]) == 1
-    assert "GEMINI_API_KEY" in data["summary"]
+    assert "GROQ_API_KEY" in data["summary"]
 
 
 def test_recommendations_endpoint_empty_list_has_friendly_summary(client, admin_headers):
@@ -70,7 +70,7 @@ def test_recommendations_endpoint_empty_list_has_friendly_summary(client, admin_
     assert "No products" in data["summary"]
 
 
-def test_generate_summary_empty_list_skips_gemini_entirely():
+def test_generate_summary_empty_list_skips_groq_entirely():
     # Even with no API key configured, an empty list should short-circuit
-    # to the friendly message without attempting any Gemini call.
+    # to the friendly message without attempting any Groq call.
     assert generate_summary([]) == "No products currently need reordering based on recent sales velocity."

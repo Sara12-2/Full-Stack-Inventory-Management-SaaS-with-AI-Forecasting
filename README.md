@@ -38,7 +38,7 @@ StockFlow is a full-stack inventory management SaaS built for small-to-mid e-com
 
 - **Core operations**: products, categories, suppliers, inventory, orders, and customers, all backed by a real relational database with correct stock-deduction/restoration logic.
 - **Real-time visibility**: low-stock and new-order alerts pushed live to every connected session via WebSockets.
-- **AI on top of real data**: demand forecasting, a natural-language inventory assistant, and reorder recommendations — all grounded in your actual sales history, with a language model (Google Gemini) used only for narrative insight, never for computing the numbers themselves.
+- **AI on top of real data**: demand forecasting, a natural-language inventory assistant, and reorder recommendations — all grounded in your actual sales history, with a language model (Groq) used only for narrative insight, never for computing the numbers themselves.
 
 The project also includes a public marketing site (home, features, pricing, about, contact) and a fully separate authenticated dashboard.
 
@@ -113,11 +113,11 @@ The project also includes a public marketing site (home, features, pricing, abou
 - Low-stock and new-order events pushed live over Socket.IO to every authenticated session, backed by Redis when available (falls back to in-process delivery in single-worker dev)
 
 ### AI features
-- **Demand forecasting** — linear-trend forecast from real order history, plus a Gemini-generated narrative insight
+- **Demand forecasting** — linear-trend forecast from real order history, plus a Groq-generated narrative insight
 - **NL restocking assistant** — a chat interface that answers questions about your live inventory, grounded in real data (never invents numbers)
-- **Smart reorder recommendations** — demand-driven (not just threshold-based) reorder quantities, plus one Gemini-generated prioritization summary across the whole list
+- **Smart reorder recommendations** — demand-driven (not just threshold-based) reorder quantities, plus one Groq-generated prioritization summary across the whole list
 
-All three AI features degrade gracefully with a clear message if no Gemini API key is configured — the app never crashes or hangs waiting on the AI provider.
+All three AI features degrade gracefully with a clear message if no Groq API key is configured — the app never crashes or hangs waiting on the AI provider.
 
 ### Other
 - Dark mode (system-aware, manual toggle, persisted)
@@ -148,7 +148,7 @@ All three AI features degrade gracefully with a clear message if no Gemini API k
 - Docker + Docker Compose — full local stack in one command
 
 **AI**
-- Google Gemini (`gemini-1.5-flash`) via `google-generativeai` — free tier, no credit card required
+- Groq (`llama-3.3-70b-versatile`) via the `groq` SDK — free tier, no credit card required, fast inference
 
 **Testing & CI**
 - Pytest (backend — 42 tests) · TypeScript + ESLint (frontend)
@@ -165,15 +165,15 @@ All three AI features degrade gracefully with a clear message if no Gemini API k
                                           ┌─────────┼─────────┐
                                           ▼         ▼         ▼
                                      ┌────────┐ ┌───────┐ ┌────────┐
-                                     │ MySQL  │ │ Redis │ │ Gemini │
+                                     │ MySQL  │ │ Redis │ │  Groq  │
                                      │  (data)│ │(cache/│ │  (AI)  │
                                      │        │ │pubsub)│ │        │
                                      └────────┘ └───────┘ └────────┘
 ```
 
-- The frontend never talks to MySQL/Redis/Gemini directly — every request goes through the Flask API.
+- The frontend never talks to MySQL/Redis/Groq directly — every request goes through the Flask API.
 - Redis is optional in local dev: if unreachable, the backend logs a warning and continues (Socket.IO falls back to local in-process delivery; nothing crashes).
-- Gemini is optional: if `GEMINI_API_KEY` isn't set, every AI endpoint still returns real, correctly-computed data — just with a placeholder instead of the AI-generated narrative.
+- Groq is optional: if `GROQ_API_KEY` isn't set, every AI endpoint still returns real, correctly-computed data — just with a placeholder instead of the AI-generated narrative.
 
 ## Project Structure
 
@@ -215,7 +215,7 @@ Requires [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
 ```bash
 cp .env.example .env
-# edit .env if you want to change default passwords or add GEMINI_API_KEY
+# edit .env if you want to change default passwords or add GROQ_API_KEY
 
 docker compose up --build
 ```
@@ -271,7 +271,7 @@ See [`.env.example`](.env.example) for the full, authoritative list. Summary:
 | `SECRET_KEY`, `JWT_SECRET_KEY` | Backend | Use long, random values in production |
 | `REDIS_URL` | Backend | Optional — app degrades gracefully if unreachable |
 | `CORS_ORIGINS` | Backend | Comma-separated list of allowed frontend origins |
-| `GEMINI_API_KEY` | Backend | Optional — get a free key at [aistudio.google.com](https://aistudio.google.com); AI features degrade gracefully without it |
+| `GROQ_API_KEY` | Backend | Optional — get a free key at [console.groq.com/keys](https://console.groq.com/keys); AI features degrade gracefully without it |
 | `NEXT_PUBLIC_API_URL` | Frontend | Backend API base URL |
 | `NEXT_PUBLIC_SOCKET_URL` | Frontend | Backend Socket.IO URL |
 
@@ -321,15 +321,15 @@ The Socket.IO handshake requires a valid JWT (`auth: { token }`); unauthenticate
 
 ## AI Features
 
-All three AI features follow the same principle: **deterministic calculation for any number that matters, Gemini only for narrative/prioritization** — a language model is never asked to compute a forecast or a quantity, which avoids hallucinated figures.
+All three AI features follow the same principle: **deterministic calculation for any number that matters, Groq only for narrative/prioritization** — a language model is never asked to compute a forecast or a quantity, which avoids hallucinated figures.
 
-| Feature | Numbers computed by | Gemini's role |
+| Feature | Numbers computed by | Groq's role |
 |---|---|---|
 | Demand forecasting | Least-squares linear regression over 8 weeks of real order history | 2–3 sentence insight on the trend + a recommendation |
 | NL assistant | — | Answers grounded in a live snapshot of your catalog, low-stock items, and top sellers; instructed to never invent numbers |
 | Reorder recommendations | `avg_weekly_sales × coverage_weeks − current_stock`, only surfaced when real sales velocity indicates a stockout risk | One summary call prioritizing across the whole list (not one call per product) |
 
-Get a free Gemini API key at [aistudio.google.com](https://aistudio.google.com) (no credit card required) and set `GEMINI_API_KEY` to enable the narrative layer. Every feature works correctly (real numbers, no crashes) even without a key — you'll just see a placeholder instead of the AI-generated text.
+Get a free Groq API key at [console.groq.com/keys](https://console.groq.com/keys) (no credit card required) and set `GROQ_API_KEY` to enable the narrative layer. Every feature works correctly (real numbers, no crashes) even without a key — you'll just see a placeholder instead of the AI-generated text. Model used: `llama-3.3-70b-versatile`.
 
 ## Testing
 
@@ -381,8 +381,11 @@ rm -rf .next node_modules/.cache
 npm run dev
 ```
 
-**AI features show a "not configured" placeholder despite adding a Gemini key**
-See [AI Features](#ai-features) and [Environment Variables](#environment-variables) — most likely the `.env` file is in the wrong location for how you're running the app (`backend/.env` for manual runs vs. repo-root `.env` for Docker Compose), or the pasted key is the wrong provider's format (Gemini keys start with `AIzaSy`, not `sk-...`).
+**AI features show a "not configured" placeholder despite adding a Groq key**
+See [AI Features](#ai-features) and [Environment Variables](#environment-variables) — most likely the `.env` file is in the wrong location for how you're running the app (`backend/.env` for manual runs vs. repo-root `.env` for Docker Compose), or the pasted key is the wrong provider's format (Groq keys start with `gsk_`, not `sk-...` or `AIzaSy...`).
+
+**Login/API calls intermittently fail with a connection error, even though the backend "is running"**
+Symptom: requests to `/api/...` randomly fail (`ERR_CONNECTION_REFUSED`) while the backend log shows repeated `Restarting with watchdog` / `Detected change in '...site-packages...'` lines. This is Flask's debug auto-reloader watching every installed package on disk and false-triggering a restart, which briefly drops the port mid-request. `backend/main.py` now runs with `use_reloader=False`, so this shouldn't recur — if you see it again, confirm that line wasn't reverted.
 
 ## Deployment
 

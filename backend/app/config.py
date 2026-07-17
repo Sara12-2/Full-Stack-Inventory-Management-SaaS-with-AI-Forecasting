@@ -24,7 +24,7 @@ class Config:
 
     CORS_ORIGINS = [origin.strip() for origin in os.environ.get("CORS_ORIGINS", "http://localhost:3000").split(",")]
 
-    GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+    GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 
 
 class DevelopmentConfig(Config):

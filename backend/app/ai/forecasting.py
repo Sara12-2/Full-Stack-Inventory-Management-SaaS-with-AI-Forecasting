@@ -38,7 +38,7 @@ def linear_forecast(history, periods_ahead=4):
 
     Deliberately a plain statistical calculation, not an LLM call -- asking
     a language model to compute a time series is unreliable and prone to
-    making up numbers. Gemini is used only for the narrative insight in
+    making up numbers. Groq is used only for the narrative insight in
     generate_insight(), never for the numbers themselves.
     """
     n = len(history)
@@ -61,19 +61,18 @@ def linear_forecast(history, periods_ahead=4):
 
 
 def generate_insight(product_name, history, forecast):
-    """A short Gemini-generated narrative recommendation. Degrades gracefully
+    """A short Groq-generated narrative recommendation. Degrades gracefully
     (never raises) if no API key is configured or the call fails -- the
     numeric forecast above is unaffected either way.
     """
-    api_key = current_app.config.get("GEMINI_API_KEY")
+    api_key = current_app.config.get("GROQ_API_KEY")
     if not api_key:
-        return "AI insight unavailable — set GEMINI_API_KEY to enable narrative recommendations."
+        return "AI insight unavailable — set GROQ_API_KEY to enable narrative recommendations."
 
     try:
-        import google.generativeai as genai
+        from groq import Groq
 
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        client = Groq(api_key=api_key)
 
         history_units = [h["units_sold"] for h in history]
         prompt = (
@@ -83,8 +82,12 @@ def generate_insight(product_name, history, forecast):
             "In 2-3 short sentences, describe the trend and give one concrete restocking "
             "recommendation. Be concise and specific to the numbers given."
         )
-        response = model.generate_content(prompt)
-        return response.text.strip()
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.3,
+        )
+        return response.choices[0].message.content.strip()
     except Exception as exc:
-        current_app.logger.warning("Gemini forecast insight failed: %s", exc)
+        current_app.logger.warning("Groq forecast insight failed: %s", exc)
         return "AI insight temporarily unavailable. Numeric forecast is still accurate."

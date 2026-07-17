@@ -57,27 +57,32 @@ def ask_assistant(question, history=None):
     Degrades gracefully (never raises) if no API key is configured or the
     call fails -- callers always get a string back, never an exception.
     """
-    api_key = current_app.config.get("GEMINI_API_KEY")
+    api_key = current_app.config.get("GROQ_API_KEY")
     if not api_key:
-        return "The AI assistant isn't configured yet — set GEMINI_API_KEY to enable it."
+        return "The AI assistant isn't configured yet — set GROQ_API_KEY to enable it."
 
     try:
-        import google.generativeai as genai
+        from groq import Groq
 
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-1.5-flash", system_instruction=SYSTEM_PROMPT)
+        client = Groq(api_key=api_key)
 
         # Keep the last few turns only -- enough for follow-up questions
         # without letting the prompt grow unbounded over a long session.
-        chat_history = [
-            {"role": "user" if turn.get("role") == "user" else "model", "parts": [turn.get("content", "")]}
-            for turn in (history or [])[-6:]
-        ]
+        messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+        for turn in (history or [])[-6:]:
+            role = "user" if turn.get("role") == "user" else "assistant"
+            messages.append({"role": role, "content": turn.get("content", "")})
+        messages.append(
+            {
+                "role": "user",
+                "content": f"Inventory data:\n{_gather_inventory_context()}\n\nQuestion: {question}",
+            }
+        )
 
-        chat = model.start_chat(history=chat_history)
-        prompt = f"Inventory data:\n{_gather_inventory_context()}\n\nQuestion: {question}"
-        response = chat.send_message(prompt)
-        return response.text.strip()
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile", messages=messages, temperature=0.3
+        )
+        return response.choices[0].message.content.strip()
     except Exception as exc:
-        current_app.logger.warning("Gemini assistant call failed: %s", exc)
+        current_app.logger.warning("Groq assistant call failed: %s", exc)
         return "I couldn't reach the AI service just now. Please try again in a moment."

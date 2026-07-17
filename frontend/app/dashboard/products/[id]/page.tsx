@@ -45,7 +45,7 @@ export default function ProductDetailPage() {
       })
       .finally(() => setLoading(false));
 
-    // Forecasting calls Gemini server-side, which is slower than the plain
+    // Forecasting calls Groq server-side, which is slower than the plain
     // CRUD calls above -- loaded independently so it never blocks the rest
     // of the page, and a failure here doesn't affect the page's own state.
     setForecastLoading(true);

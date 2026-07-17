@@ -48,16 +48,16 @@ def test_forecast_endpoint_not_found(client, admin_headers):
 
 
 def test_forecast_endpoint_no_api_key_degrades_gracefully(client, admin_headers):
-    # Test env has no GEMINI_API_KEY configured -- the endpoint must still
+    # Test env has no GROQ_API_KEY configured -- the endpoint must still
     # return a real numeric forecast, with a clear placeholder insight
-    # instead of crashing or hanging trying to reach Gemini.
+    # instead of crashing or hanging trying to reach Groq.
     product = _make_product()
     resp = client.get(f"/api/products/{product.id}/forecast", headers=admin_headers)
     assert resp.status_code == 200
     data = resp.get_json()
     assert len(data["history"]) == 8
     assert len(data["forecast"]) == 4
-    assert "GEMINI_API_KEY" in data["insight"]
+    assert "GROQ_API_KEY" in data["insight"]
 
 
 def test_forecast_reflects_real_order_history(client, admin_headers):
