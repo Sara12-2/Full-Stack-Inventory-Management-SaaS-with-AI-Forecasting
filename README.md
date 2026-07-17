@@ -79,47 +79,147 @@ The project also includes a public marketing site (home, features, pricing, abou
 > **Quick start:** `cp .env.example .env && docker compose up --build` — see [Getting Started](#getting-started) for the full walkthrough.
 
 <br>
+## 📸 Screenshots
 
-## Screenshots
+> All screenshots live in `docs/screenshots/` and show both light and dark modes.
 
-> Screenshots referenced below live in `docs/screenshots/`. Capture each page (light mode, ~1280px wide is a good default) and save it with the filename shown so these links resolve automatically.
+---
 
-<div align="center">
+### 1. 🏠 Home Page
 
-| | |
+| Light Mode | Dark Mode |
 |:---:|:---:|
-| ![Dashboard overview](docs/screenshots/dashboard.png) | ![Product detail with AI forecast](docs/screenshots/product-forecast.png) |
-| Dashboard overview | Product detail + AI forecast |
-| ![Inventory with AI reorder recommendations](docs/screenshots/inventory.png) | ![AI Assistant](docs/screenshots/ai-assistant.png) |
-| Inventory + AI reorder recommendations | AI Assistant |
+| ![Home Light](docs/screenshots/home.png) | ![Home Dark](docs/screenshots/home-dark.png) |
 
-</div>
+---
 
-<details>
-<summary><b>Full screenshot checklist (14 pages)</b></summary>
-<br>
+### 2. 📄 About Page
 
-| Page | File |
-|---|---|
-| Marketing home page | `docs/screenshots/home.png` |
-| About (StockFlow + DevHatch Labs) | `docs/screenshots/about.png` |
-| Pricing | `docs/screenshots/pricing.png` |
-| Login | `docs/screenshots/login.png` |
-| Dashboard overview | `docs/screenshots/dashboard.png` |
-| Products | `docs/screenshots/products.png` |
-| Product detail + AI forecast | `docs/screenshots/product-forecast.png` |
-| Inventory + AI reorder recommendations | `docs/screenshots/inventory.png` |
-| Orders | `docs/screenshots/orders.png` |
-| Order detail | `docs/screenshots/order-detail.png` |
-| Customers | `docs/screenshots/customers.png` |
-| Reports | `docs/screenshots/reports.png` |
-| AI Assistant (chat) | `docs/screenshots/ai-assistant.png` |
-| Dark mode | `docs/screenshots/dark-mode.png` |
+| Light Mode | Dark Mode |
+|:---:|:---:|
+| ![About Light](docs/screenshots/about-light-part-1.png) | ![About Dark](docs/screenshots/about-dark-part-1.png) |
 
-</details>
+---
 
-<br>
+### 3. ⚡ Features Page
 
+| Light Mode | Dark Mode |
+|:---:|:---:|
+| ![Features Light](docs/screenshots/features.png) | ![Features Dark](docs/screenshots/features-dark.png) |
+
+---
+
+### 4. 💰 Pricing Page
+
+| Light Mode | Dark Mode |
+|:---:|:---:|
+| ![Pricing Light](docs/screenshots/pricing-light.png) | ![Pricing Dark](docs/screenshots/pricing-dark.png) |
+
+---
+
+### 5. 📞 Contact Page
+
+| Light Mode | Dark Mode |
+|:---:|:---:|
+| ![Contact Light](docs/screenshots/contact-light.png) | ![Contact Dark](docs/screenshots/contact-dark.png) |
+
+---
+
+### 6. 🔐 Login Page
+
+| Light Mode |
+|:---:|
+| ![Login](docs/screenshots/login.png) |
+
+---
+
+### 7. 📝 Signup Page
+
+| Light Mode |
+|:---:|
+| ![Signup](docs/screenshots/signup.png) |
+
+---
+
+### 8. 📊 Dashboard
+
+| Light Mode | Dark Mode |
+|:---:|:---:|
+| ![Dashboard Light](docs/screenshots/dashboard.png) | ![Dashboard Dark](docs/screenshots/dashboard-dark.png) |
+
+---
+
+### 9. 📦 Products Page
+
+| Light Mode | Dark Mode |
+|:---:|:---:|
+| ![Products Light](docs/screenshots/products.png) | ![Products Dark](docs/screenshots/products-dark.png) |
+
+---
+
+### 10. 🏷️ Categories Page
+
+| Light Mode | Dark Mode |
+|:---:|:---:|
+| ![Categories Light](docs/screenshots/categories.png) | ![Categories Dark](docs/screenshots/categories-dark.png) |
+
+---
+
+### 11. 🏢 Suppliers Page
+
+| Light Mode | Dark Mode |
+|:---:|:---:|
+| ![Suppliers Light](docs/screenshots/suppliers.png) | ![Suppliers Dark](docs/screenshots/suppliers-dark.png) |
+
+---
+
+### 12. 📦 Inventory Page
+
+| Light Mode | Dark Mode |
+|:---:|:---:|
+| ![Inventory Light](docs/screenshots/inventory.png) | ![Inventory Dark](docs/screenshots/inventory-dark.png) |
+
+---
+
+### 13. 🛒 Orders Page
+
+| Light Mode | Dark Mode |
+|:---:|:---:|
+| ![Orders Light](docs/screenshots/orders.png) | ![Orders Dark](docs/screenshots/orders-dark.png) |
+
+---
+
+### 14. 👥 Customers Page
+
+| Light Mode | Dark Mode |
+|:---:|:---:|
+| ![Customers Light](docs/screenshots/customers.png) | ![Customers Dark](docs/screenshots/customers-dark.png) |
+
+---
+
+### 15. 📊 Reports Page
+
+| Light Mode | Dark Mode |
+|:---:|:---:|
+| ![Reports Light](docs/screenshots/reports.png) | ![Reports Dark](docs/screenshots/reports-dark.png) |
+
+---
+
+### 16. 🤖 AI Assistant
+
+| Light Mode | Dark Mode |
+|:---:|:---:|
+| ![AI Assistant Light](docs/screenshots/ai-assistant.png) | ![AI Assistant Dark](docs/screenshots/ai-assistant-dark.png) |
+
+---
+
+### 17. 👤 Profile Page
+
+| Light Mode |
+|:---:|
+| ![Profile](docs/screenshots/admin-profile-light.png) |
+
+---
 ## Features
 
 ### Public marketing site
