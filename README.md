@@ -1,59 +1,103 @@
+<div align="center">
+
 # StockFlow
 
-**Inventory, order, and customer management for growing e-commerce teams — with AI-powered forecasting, a natural-language assistant, and smart reorder recommendations built in.**
+**Inventory, order, and customer management for growing e-commerce teams —**
+**with AI-powered forecasting, a natural-language assistant, and smart reorder recommendations built in.**
 
 [![CI](https://github.com/Sara12-2/Full-Stack-Inventory-Management-SaaS-with-AI-Forecasting/actions/workflows/ci.yml/badge.svg)](https://github.com/Sara12-2/Full-Stack-Inventory-Management-SaaS-with-AI-Forecasting/actions/workflows/ci.yml)
-![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)
-![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
-![Flask](https://img.shields.io/badge/Flask-3-000000?logo=flask)
-![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?logo=mysql&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
-![Groq](https://img.shields.io/badge/AI-Groq-F55036)
-![License](https://img.shields.io/badge/license-proprietary-lightgrey)
+![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)
+![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-3-000000?style=flat-square&logo=flask)
+![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?style=flat-square&logo=mysql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-7-DC382D?style=flat-square&logo=redis&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker&logoColor=white)
+![Groq](https://img.shields.io/badge/AI-Groq-F55036?style=flat-square)
+![License](https://img.shields.io/badge/license-proprietary-lightgrey?style=flat-square)
 
-Built by [DevHatch Labs](#about-devhatch-labs).
+Built by [DevHatch Labs](#about-devhatch-labs) &nbsp;•&nbsp; [Features](#features) &nbsp;•&nbsp; [Getting Started](#getting-started) &nbsp;•&nbsp; [AI Design](#ai-features) &nbsp;•&nbsp; [Troubleshooting](#troubleshooting)
 
----
+</div>
+
+<br>
 
 ## Table of Contents
 
+<table>
+<tr>
+<td valign="top">
+
+**The project**
 - [Overview](#overview)
 - [Screenshots](#screenshots)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Architecture](#architecture)
 - [Project Structure](#project-structure)
+
+</td>
+<td valign="top">
+
+**Running it**
 - [Getting Started](#getting-started)
-  - [Option A: Docker Compose (recommended)](#option-a-docker-compose-recommended)
-  - [Option B: Manual local setup](#option-b-manual-local-setup)
 - [Environment Variables](#environment-variables)
 - [Database & Seed Data](#database--seed-data)
-- [API Overview](#api-overview)
-- [Real-Time Alerts](#real-time-alerts)
-- [AI Features](#ai-features)
 - [Testing](#testing)
 - [CI/CD](#cicd)
 - [Troubleshooting](#troubleshooting)
+
+</td>
+<td valign="top">
+
+**Reference**
+- [API Overview](#api-overview)
+- [Real-Time Alerts](#real-time-alerts)
+- [AI Features](#ai-features)
 - [Deployment](#deployment)
 - [Build Roadmap](#build-roadmap)
 - [About DevHatch Labs](#about-devhatch-labs)
-- [License](#license)
 
----
+</td>
+</tr>
+</table>
+
+<br>
 
 ## Overview
 
 StockFlow is a full-stack inventory management SaaS built for small-to-mid e-commerce teams who've outgrown spreadsheets but don't want the cost or complexity of a traditional ERP. It combines:
 
-- **Core operations**: products, categories, suppliers, inventory, orders, and customers, all backed by a real relational database with correct stock-deduction/restoration logic.
-- **Real-time visibility**: low-stock and new-order alerts pushed live to every connected session via WebSockets.
-- **AI on top of real data**: demand forecasting, a natural-language inventory assistant, and reorder recommendations — all grounded in your actual sales history, with a language model (Groq) used only for narrative insight, never for computing the numbers themselves.
+| | |
+|---|---|
+| 🗃️ **Core operations** | Products, categories, suppliers, inventory, orders, and customers, all backed by a real relational database with correct stock-deduction/restoration logic. |
+| ⚡ **Real-time visibility** | Low-stock and new-order alerts pushed live to every connected session via WebSockets. |
+| 🤖 **AI on real data** | Demand forecasting, a natural-language inventory assistant, and reorder recommendations — grounded in your actual sales history, with a language model (Groq) used only for narrative insight, **never** for computing the numbers themselves. |
 
 The project also includes a public marketing site (home, features, pricing, about, contact) and a fully separate authenticated dashboard.
+
+> **Quick start:** `cp .env.example .env && docker compose up --build` — see [Getting Started](#getting-started) for the full walkthrough.
+
+<br>
 
 ## Screenshots
 
 > Screenshots referenced below live in `docs/screenshots/`. Capture each page (light mode, ~1280px wide is a good default) and save it with the filename shown so these links resolve automatically.
+
+<div align="center">
+
+| | |
+|:---:|:---:|
+| ![Dashboard overview](docs/screenshots/dashboard.png) | ![Product detail with AI forecast](docs/screenshots/product-forecast.png) |
+| Dashboard overview | Product detail + AI forecast |
+| ![Inventory with AI reorder recommendations](docs/screenshots/inventory.png) | ![AI Assistant](docs/screenshots/ai-assistant.png) |
+| Inventory + AI reorder recommendations | AI Assistant |
+
+</div>
+
+<details>
+<summary><b>Full screenshot checklist (14 pages)</b></summary>
+<br>
 
 | Page | File |
 |---|---|
@@ -72,12 +116,9 @@ The project also includes a public marketing site (home, features, pricing, abou
 | AI Assistant (chat) | `docs/screenshots/ai-assistant.png` |
 | Dark mode | `docs/screenshots/dark-mode.png` |
 
-```markdown
-![Dashboard overview](docs/screenshots/dashboard.png)
-![Product detail with AI forecast](docs/screenshots/product-forecast.png)
-![Inventory with AI reorder recommendations](docs/screenshots/inventory.png)
-![AI Assistant](docs/screenshots/ai-assistant.png)
-```
+</details>
+
+<br>
 
 ## Features
 
@@ -133,35 +174,39 @@ All three AI features degrade gracefully with a clear message if no Groq API key
 - Fully responsive (mobile sidebar, adaptive layouts)
 - Accessible forms (label association, `aria-invalid`/`aria-describedby`, `aria-label`s on icon-only controls, `aria-live` toasts)
 
+<br>
+
 ## Tech Stack
 
-**Frontend**
-- [Next.js 14](https://nextjs.org/) (App Router) + React 18 + TypeScript
-- Tailwind CSS 3
-- Recharts (charts), Framer Motion (animation), `next-themes` (dark mode)
-- Axios (API client), Socket.IO client (real-time)
+<table>
+<tr><td width="120"><b>Frontend</b></td><td>
 
-**Backend**
-- [Flask 3](https://flask.palletsprojects.com/) (application factory pattern, Blueprints per resource)
-- SQLAlchemy + Alembic (Flask-Migrate) — ORM and migrations
-- Flask-JWT-Extended — auth
-- Marshmallow — request validation
-- Flask-SocketIO — real-time alerts
-- PyMySQL — MySQL driver
-- Gunicorn + eventlet — production WSGI/async server
+[Next.js 14](https://nextjs.org/) (App Router) + React 18 + TypeScript · Tailwind CSS 3 · Recharts (charts) · Framer Motion (animation) · `next-themes` (dark mode) · Axios (API client) · Socket.IO client (real-time)
 
-**Database & Infra**
-- MySQL 8 (production/Docker) — SQLite used only for isolated automated tests
-- Redis 7 — cache + Socket.IO message queue
-- Nginx — reverse proxy (routes `/api/*` and `/socket.io/*` to the backend, everything else to the frontend)
-- Docker + Docker Compose — full local stack in one command
+</td></tr>
+<tr><td><b>Backend</b></td><td>
 
-**AI**
-- Groq (`llama-3.3-70b-versatile`) via the `groq` SDK — free tier, no credit card required, fast inference
+[Flask 3](https://flask.palletsprojects.com/) (application factory pattern, Blueprints per resource) · SQLAlchemy + Alembic (Flask-Migrate) · Flask-JWT-Extended · Marshmallow · Flask-SocketIO · PyMySQL · Gunicorn + eventlet
 
-**Testing & CI**
-- Pytest (backend — 42 tests) · TypeScript + ESLint (frontend)
-- GitHub Actions — runs both test suites on every push/PR
+</td></tr>
+<tr><td><b>Database & Infra</b></td><td>
+
+MySQL 8 (production/Docker; SQLite for isolated tests only) · Redis 7 (cache + Socket.IO message queue) · Nginx (reverse proxy) · Docker + Docker Compose
+
+</td></tr>
+<tr><td><b>AI</b></td><td>
+
+Groq (`llama-3.3-70b-versatile`) via the `groq` SDK — free tier, no credit card required, fast inference
+
+</td></tr>
+<tr><td><b>Testing & CI</b></td><td>
+
+Pytest (backend — 42 tests) · TypeScript + ESLint (frontend) · GitHub Actions (runs both suites on every push/PR)
+
+</td></tr>
+</table>
+
+<br>
 
 ## Architecture
 
@@ -184,7 +229,12 @@ All three AI features degrade gracefully with a clear message if no Groq API key
 - Redis is optional in local dev: if unreachable, the backend logs a warning and continues (Socket.IO falls back to local in-process delivery; nothing crashes).
 - Groq is optional: if `GROQ_API_KEY` isn't set, every AI endpoint still returns real, correctly-computed data — just with a placeholder instead of the AI-generated narrative.
 
+<br>
+
 ## Project Structure
+
+<details>
+<summary><b>Expand full tree</b></summary>
 
 ```
 Stockflow_Full_Stack_Dashboard/
@@ -216,6 +266,10 @@ Stockflow_Full_Stack_Dashboard/
 └── .env.example                # Every environment variable the stack needs
 ```
 
+</details>
+
+<br>
+
 ## Getting Started
 
 ### Option A: Docker Compose (recommended)
@@ -231,7 +285,7 @@ docker compose up --build
 
 This starts MySQL, Redis, the Flask backend, the Next.js frontend, and Nginx together. Once healthy, the app is available at **http://localhost** (routed through Nginx).
 
-> The `mysql` container publishes to host port **3307**, not 3306 — this avoids colliding with a MySQL install already running on your machine (a common conflict on Windows/Mac dev boxes). Nothing else needs to change: the backend talks to MySQL over the internal Docker network (`mysql:3306`), never through the host port. Port 3307 only matters if you want to connect an external MySQL client (Workbench, DBeaver) to the containerized database.
+> **Note:** the `mysql` container publishes to host port **3307**, not 3306 — this avoids colliding with a MySQL install already running on your machine (a common conflict on Windows/Mac dev boxes). Nothing else needs to change: the backend talks to MySQL over the internal Docker network (`mysql:3306`), never through the host port. Port 3307 only matters if you want to connect an external MySQL client (Workbench, DBeaver) to the containerized database.
 
 Seed sample data (run once, in a separate terminal, while the stack is up):
 ```bash
@@ -267,9 +321,14 @@ npm install
 npm run dev             # runs on http://localhost:3000
 ```
 
-Seeded login (from `seed.py`):
-- **Admin**: `admin@stockflow.dev` / `password123`
-- **Staff**: `staff@stockflow.dev` / `password123`
+**Seeded login** (from `seed.py`):
+
+| Role | Email | Password |
+|---|---|---|
+| Admin | `admin@stockflow.dev` | `password123` |
+| Staff | `staff@stockflow.dev` | `password123` |
+
+<br>
 
 ## Environment Variables
 
@@ -286,6 +345,8 @@ See [`.env.example`](.env.example) for the full, authoritative list. Summary:
 | `NEXT_PUBLIC_API_URL` | Frontend | Backend API base URL |
 | `NEXT_PUBLIC_SOCKET_URL` | Frontend | Backend Socket.IO URL |
 
+<br>
+
 ## Database & Seed Data
 
 Schema is managed with Alembic (`backend/migrations/`). To apply migrations:
@@ -301,6 +362,8 @@ flask db upgrade
 ```
 
 `python seed.py` drops and recreates all tables, then inserts: 2 users (admin + staff), 5 categories, 3 suppliers, 8 products, 5 customers, and 5 orders with line items — enough to exercise every feature (including low-stock items and a cancelled order) out of the box.
+
+<br>
 
 ## API Overview
 
@@ -322,6 +385,8 @@ All endpoints are prefixed `/api` and (except auth) require `Authorization: Bear
 
 Admin-only endpoints (product/supplier delete) return `403` for non-admin tokens. See `backend/tests/` for the exact contract of every endpoint, verified by the test suite.
 
+<br>
+
 ## Real-Time Alerts
 
 The backend emits two Socket.IO events to all authenticated, connected clients:
@@ -329,6 +394,8 @@ The backend emits two Socket.IO events to all authenticated, connected clients:
 - `new_order_alert` — fires on every new order
 
 The Socket.IO handshake requires a valid JWT (`auth: { token }`); unauthenticated connections are rejected. The frontend shows these as toast notifications app-wide via `DashboardLayout`.
+
+<br>
 
 ## AI Features
 
@@ -341,6 +408,8 @@ All three AI features follow the same principle: **deterministic calculation for
 | Reorder recommendations | `avg_weekly_sales × coverage_weeks − current_stock`, only surfaced when real sales velocity indicates a stockout risk | One summary call prioritizing across the whole list (not one call per product) |
 
 Get a free Groq API key at [console.groq.com/keys](https://console.groq.com/keys) (no credit card required) and set `GROQ_API_KEY` to enable the narrative layer. Every feature works correctly (real numbers, no crashes) even without a key — you'll just see a placeholder instead of the AI-generated text. Model used: `llama-3.3-70b-versatile`.
+
+<br>
 
 ## Testing
 
@@ -359,15 +428,21 @@ npm run lint         # ESLint
 npm run build        # production build
 ```
 
+<br>
+
 ## CI/CD
 
 `.github/workflows/ci.yml` runs on every push/PR to `main` and `feat/**`/`fix/**` branches:
 - **backend job**: installs deps, runs the full pytest suite
 - **frontend job**: installs deps, type-checks, lints, and runs a production build
 
+<br>
+
 ## Troubleshooting
 
-Dev-mode issues actually hit while building this project, and how to recognize/fix them:
+<details>
+<summary><b>Dev-mode issues actually hit while building this project, and how to recognize/fix them — click to expand</b></summary>
+<br>
 
 **Page fails with "The default export is not a React Component in page: /some-route"**
 An `app/**/layout.tsx` or `page.tsx` file has no content (0 bytes) — Next.js requires every file it finds in the `app/` router to export a valid component. This can happen from an accidental save/edit that wipes a file, or from git operations (see below). Check the file's actual size/content; if it's empty, restore it from git history:
@@ -407,9 +482,15 @@ Only happens when Redis is actually reachable (i.e. in Docker — local dev with
 **Dashboard/API calls all return `401 Unauthorized` after the backend has been restarted or rebuilt several times**
 Your browser's `localStorage` is holding a token from an earlier session that no longer matches the currently-running backend. Open DevTools → Application → Local Storage → delete `stockflow_token` and `stockflow_user`, then log in again for a fresh token.
 
+</details>
+
+<br>
+
 ## Deployment
 
 Intended production targets: **Vercel** (frontend), **Render** (backend), a hosted MySQL provider, and Redis Cloud — all of which have free tiers suitable for this project. Deployment is tracked as a separate phase; see [Build Roadmap](#build-roadmap) below.
+
+<br>
 
 ## Build Roadmap
 
@@ -420,24 +501,49 @@ StockFlow was built in phases, each independently tested end-to-end (backend: py
 - [x] **Phase 3** — AI (demand forecasting, NL restocking assistant, smart reorder recommendations)
 - [ ] **Phase 4** — Live deployment (Vercel + Render + hosted MySQL + Redis Cloud)
 
+<br>
+
 ## About DevHatch Labs
+
+<div align="center">
 
 **Build Smarter. Scale Faster.**
 
+</div>
+
 DevHatch Labs' vision is to become a leading AI solutions company, helping businesses adopt artificial intelligence through practical, scalable, and affordable implementations. Our mission is centered on building practical AI solutions that create measurable business impact.
 
-Services:
+<table>
+<tr>
+<td valign="top" width="50%">
+
+**AI Services**
 - AI chatbots and intelligent agents
 - AI calling agents
 - WhatsApp automation
 - CRM and workflow automation
 - AI-powered customer support
 - Intelligent document processing (RAG systems)
+
+</td>
+<td valign="top" width="50%">
+
+**Web & Growth**
 - Custom web development (MERN stack)
 - SaaS development
 - Business process automation
 - Landing pages & personal branding
 
+</td>
+</tr>
+</table>
+
+<br>
+
 ## License
 
 &copy; DevHatch Labs. All rights reserved.
+
+<div align="center">
+<sub>Built with Next.js, Flask, and Groq.</sub>
+</div>
