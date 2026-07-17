@@ -81,144 +81,119 @@ The project also includes a public marketing site (home, features, pricing, abou
 <br>
 ## 📸 Screenshots
 
-> All screenshots live in `docs/screenshots/` and show both light and dark modes.
+> All screenshots live in `docs/screenshots/`
 
 ---
 
+## ☀️ Light Mode Screenshots
+
 ### 1. 🏠 Home Page
 
-| Light Mode | Dark Mode |
-|:---:|:---:|
-| ![Home Light](docs/screenshots/home.png) | ![Home Dark](docs/screenshots/home-dark.png) |
+![Home Light](docs/screenshots/home.png)
 
 ---
 
 ### 2. 📄 About Page
 
-| Light Mode | Dark Mode |
-|:---:|:---:|
-| ![About Light](docs/screenshots/about-light-part-1.png) | ![About Dark](docs/screenshots/about-dark-part-1.png) |
+![About Light](docs/screenshots/about-light-part-1.png)
 
 ---
 
-### 3. ⚡ Features Page
+### 3. 📄 About Page (Continued)
 
-| Light Mode | Dark Mode |
-|:---:|:---:|
-| ![Features Light](docs/screenshots/features.png) | ![Features Dark](docs/screenshots/features-dark.png) |
+![About Light 2](docs/screenshots/about-light-part-2.png)
 
 ---
 
-### 4. 💰 Pricing Page
+### 4. ⚡ Features Page
 
-| Light Mode | Dark Mode |
-|:---:|:---:|
-| ![Pricing Light](docs/screenshots/pricing-light.png) | ![Pricing Dark](docs/screenshots/pricing-dark.png) |
+![Features Light](docs/screenshots/features.png)
 
 ---
 
-### 5. 📞 Contact Page
+### 5. 💰 Pricing Page
 
-| Light Mode | Dark Mode |
-|:---:|:---:|
-| ![Contact Light](docs/screenshots/contact-light.png) | ![Contact Dark](docs/screenshots/contact-dark.png) |
+![Pricing Light](docs/screenshots/pricing-light.png)
 
 ---
 
-### 6. 🔐 Login Page
+### 6. 📞 Contact Page
 
-| Light Mode |
-|:---:|
-| ![Login](docs/screenshots/login.png) |
+![Contact Light](docs/screenshots/contact-light.png)
 
 ---
 
-### 7. 📝 Signup Page
+### 7. 🔐 Login Page
 
-| Light Mode |
-|:---:|
-| ![Signup](docs/screenshots/signup.png) |
+![Login](docs/screenshots/login.png)
 
 ---
 
-### 8. 📊 Dashboard
+### 8. 📝 Signup Page
 
-| Light Mode | Dark Mode |
-|:---:|:---:|
-| ![Dashboard Light](docs/screenshots/dashboard.png) | ![Dashboard Dark](docs/screenshots/dashboard-dark.png) |
+![Signup](docs/screenshots/signup.png)
 
 ---
 
-### 9. 📦 Products Page
+### 9. 📊 Dashboard
 
-| Light Mode | Dark Mode |
-|:---:|:---:|
-| ![Products Light](docs/screenshots/products.png) | ![Products Dark](docs/screenshots/products-dark.png) |
+![Dashboard Light](docs/screenshots/dashboard.png)
 
 ---
 
-### 10. 🏷️ Categories Page
+### 10. 📦 Products Page
 
-| Light Mode | Dark Mode |
-|:---:|:---:|
-| ![Categories Light](docs/screenshots/categories.png) | ![Categories Dark](docs/screenshots/categories-dark.png) |
+![Products Light](docs/screenshots/products.png)
 
 ---
 
-### 11. 🏢 Suppliers Page
+### 11. 🏷️ Categories Page
 
-| Light Mode | Dark Mode |
-|:---:|:---:|
-| ![Suppliers Light](docs/screenshots/suppliers.png) | ![Suppliers Dark](docs/screenshots/suppliers-dark.png) |
+![Categories Light](docs/screenshots/categories.png)
 
 ---
 
-### 12. 📦 Inventory Page
+### 12. 🏢 Suppliers Page
 
-| Light Mode | Dark Mode |
-|:---:|:---:|
-| ![Inventory Light](docs/screenshots/inventory.png) | ![Inventory Dark](docs/screenshots/inventory-dark.png) |
+![Suppliers Light](docs/screenshots/suppliers.png)
 
 ---
 
-### 13. 🛒 Orders Page
+### 13. 📦 Inventory Page
 
-| Light Mode | Dark Mode |
-|:---:|:---:|
-| ![Orders Light](docs/screenshots/orders.png) | ![Orders Dark](docs/screenshots/orders-dark.png) |
+![Inventory Light](docs/screenshots/inventory.png)
 
 ---
 
-### 14. 👥 Customers Page
+### 14. 🛒 Orders Page
 
-| Light Mode | Dark Mode |
-|:---:|:---:|
-| ![Customers Light](docs/screenshots/customers.png) | ![Customers Dark](docs/screenshots/customers-dark.png) |
+![Orders Light](docs/screenshots/orders.png)
 
 ---
 
-### 15. 📊 Reports Page
+### 15. 👥 Customers Page
 
-| Light Mode | Dark Mode |
-|:---:|:---:|
-| ![Reports Light](docs/screenshots/reports.png) | ![Reports Dark](docs/screenshots/reports-dark.png) |
+![Customers Light](docs/screenshots/customers.png)
 
 ---
 
-### 16. 🤖 AI Assistant
+### 16. 📊 Reports Page
 
-| Light Mode | Dark Mode |
-|:---:|:---:|
-| ![AI Assistant Light](docs/screenshots/ai-assistant.png) | ![AI Assistant Dark](docs/screenshots/ai-assistant-dark.png) |
+![Reports Light](docs/screenshots/reports.png)
 
 ---
 
-### 17. 👤 Profile Page
+### 17. 🤖 AI Assistant
 
-| Light Mode |
-|:---:|
-| ![Profile](docs/screenshots/admin-profile-light.png) |
+![AI Assistant Light](docs/screenshots/ai-assistant.png)
 
+---
+
+### 18. 👤 Profile Page
+
+![Profile Light](docs/screenshots/admin-profile-light.png)
+
+---
 ---
 ## Features
 
