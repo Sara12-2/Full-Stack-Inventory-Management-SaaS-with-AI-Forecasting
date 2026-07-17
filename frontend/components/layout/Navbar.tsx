@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Search, Bell, ChevronDown, Sun, Moon, LogOut, User, Settings as SettingsIcon, Menu } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { clearToken } from "@/lib/auth";
+import { clearToken, getUser } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/providers/ToastProvider";
 
@@ -16,10 +16,20 @@ export default function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
+  const user = mounted ? getUser() : null;
+  const initials = user?.name
+    ? user.name.split(" ").map((part) => part[0]).slice(0, 2).join("").toUpperCase()
+    : "?";
+
   const handleLogout = () => {
     clearToken();
     showToast("info", "You've been logged out.");
     router.push("/login");
+  };
+
+  const goTo = (path: string) => {
+    setDropdownOpen(false);
+    router.push(path);
   };
 
   const isDark = mounted && theme === "dark";
@@ -51,7 +61,7 @@ export default function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
         </button>
         <div className="relative">
           <button onClick={() => setDropdownOpen(!dropdownOpen)} aria-label="User menu" aria-expanded={dropdownOpen} className="flex items-center gap-1.5 rounded-lg py-1 pl-1 pr-1.5 hover:bg-neutral-100 dark:hover:bg-white/5 sm:pr-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-medium text-white">SM</div>
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-medium text-white">{initials}</div>
             <ChevronDown className="hidden h-3.5 w-3.5 text-text-secondary dark:text-text-secondary-dark sm:block" />
           </button>
           <AnimatePresence>
@@ -61,13 +71,13 @@ export default function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
                 className="absolute right-0 mt-2 w-48 rounded-lg border border-border bg-card p-1 shadow-sm dark:border-border-dark dark:bg-card-dark dark:shadow-sm-dark"
               >
                 <div className="border-b border-border px-3 py-2 dark:border-border-dark">
-                  <p className="text-sm font-medium text-text-primary dark:text-text-primary-dark">Sara Manzoor</p>
-                  <p className="text-xs text-text-secondary dark:text-text-secondary-dark">Admin</p>
+                  <p className="truncate text-sm font-medium text-text-primary dark:text-text-primary-dark">{user?.name || "Unknown user"}</p>
+                  <p className="text-xs capitalize text-text-secondary dark:text-text-secondary-dark">{user?.role || ""}</p>
                 </div>
-                <button className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-text-primary hover:bg-neutral-50 dark:text-text-primary-dark dark:hover:bg-white/5">
+                <button onClick={() => goTo("/dashboard/profile")} className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-text-primary hover:bg-neutral-50 dark:text-text-primary-dark dark:hover:bg-white/5">
                   <User className="h-4 w-4" /> Profile
                 </button>
-                <button className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-text-primary hover:bg-neutral-50 dark:text-text-primary-dark dark:hover:bg-white/5">
+                <button onClick={() => goTo("/dashboard/settings")} className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-text-primary hover:bg-neutral-50 dark:text-text-primary-dark dark:hover:bg-white/5">
                   <SettingsIcon className="h-4 w-4" /> Settings
                 </button>
                 <button onClick={handleLogout} className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-danger hover:bg-red-50 dark:hover:bg-danger/10">

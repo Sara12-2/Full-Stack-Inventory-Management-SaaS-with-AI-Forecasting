@@ -24,6 +24,7 @@ Built by [DevHatch Labs](#about-devhatch-labs).
 - [AI Features](#ai-features)
 - [Testing](#testing)
 - [CI/CD](#cicd)
+- [Troubleshooting](#troubleshooting)
 - [Deployment](#deployment)
 - [Build Roadmap](#build-roadmap)
 - [About DevHatch Labs](#about-devhatch-labs)
@@ -79,6 +80,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 - JWT-based signup/login (email + password, bcrypt-hashed via Werkzeug)
 - Role-based access control — `admin` and `staff` roles; public signup always creates `staff` (no privilege escalation via the signup form)
 - Session persistence via `localStorage`, automatic `Authorization: Bearer` header on every API call
+- Profile page showing the real logged-in user (name, email, role, member since) — reachable from the navbar's user menu, which also links to Settings and Log out
 
 ### Dashboard overview
 - Live stats (products, orders, low-stock count, revenue this month)
@@ -351,6 +353,36 @@ npm run build        # production build
 `.github/workflows/ci.yml` runs on every push/PR to `main` and `feat/**`/`fix/**` branches:
 - **backend job**: installs deps, runs the full pytest suite
 - **frontend job**: installs deps, type-checks, lints, and runs a production build
+
+## Troubleshooting
+
+Dev-mode issues actually hit while building this project, and how to recognize/fix them:
+
+**Page fails with "The default export is not a React Component in page: /some-route"**
+An `app/**/layout.tsx` or `page.tsx` file has no content (0 bytes) — Next.js requires every file it finds in the `app/` router to export a valid component. This can happen from an accidental save/edit that wipes a file, or from git operations (see below). Check the file's actual size/content; if it's empty, restore it from git history:
+```bash
+git log --oneline -- path/to/file.tsx
+git show <commit-before-it-broke>:frontend/path/to/file.tsx
+```
+
+**Build error pointing at a file inside `node_modules` (e.g. "Module not found: Can't resolve '../util/X'")**
+A corrupted/incomplete package install — a folder exists but is missing files it should have. Reinstall just that package rather than wiping all of `node_modules`:
+```bash
+cd frontend
+rm -rf node_modules/<package-name>
+npm install <package-name>
+```
+
+**Frontend shows stale/wrong content, or errors referencing files that were already deleted from the codebase**
+Stale `.next` build cache — common after switching branches, `git reset --hard`, or any operation that changes many files while the dev server is running. Stop the dev server, then:
+```bash
+cd frontend
+rm -rf .next node_modules/.cache
+npm run dev
+```
+
+**AI features show a "not configured" placeholder despite adding a Gemini key**
+See [AI Features](#ai-features) and [Environment Variables](#environment-variables) — most likely the `.env` file is in the wrong location for how you're running the app (`backend/.env` for manual runs vs. repo-root `.env` for Docker Compose), or the pasted key is the wrong provider's format (Gemini keys start with `AIzaSy`, not `sk-...`).
 
 ## Deployment
 
