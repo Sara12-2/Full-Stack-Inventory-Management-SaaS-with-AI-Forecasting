@@ -1,25 +1,31 @@
 <div align="center">
 
-# StockFlow
+# <img src="https://img.icons8.com/color/48/000000/artificial-intelligence.png" width="40" height="40" style="vertical-align: middle;"/> StockFlow AI
 
-**Inventory, order, and customer management for growing e-commerce teams —**
-**with AI-powered forecasting, a natural-language assistant, and smart reorder recommendations built in.**
+###  AI-Powered Inventory Management for Modern E-Commerce Teams
+
+**Inventory · Orders · Customers · Forecasting · Assistant · Reorder Intelligence**
 
 [![CI](https://github.com/Sara12-2/Full-Stack-Inventory-Management-SaaS-with-AI-Forecasting/actions/workflows/ci.yml/badge.svg)](https://github.com/Sara12-2/Full-Stack-Inventory-Management-SaaS-with-AI-Forecasting/actions/workflows/ci.yml)
-![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)
-![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-3-000000?style=flat-square&logo=flask)
-![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?style=flat-square&logo=mysql&logoColor=white)
-![Redis](https://img.shields.io/badge/Redis-7-DC382D?style=flat-square&logo=redis&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker&logoColor=white)
-![Groq](https://img.shields.io/badge/AI-Groq-F55036?style=flat-square)
-![License](https://img.shields.io/badge/license-proprietary-lightgrey?style=flat-square)
+![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)
+![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-3-000000?style=for-the-badge&logo=flask)
+![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-7-DC382D?style=for-the-badge&logo=redis&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Groq](https://img.shields.io/badge/AI-Groq-F55036?style=for-the-badge)
 
-Built by [DevHatch Labs](#about-devhatch-labs) &nbsp;•&nbsp; [Features](#features) &nbsp;•&nbsp; [Getting Started](#getting-started) &nbsp;•&nbsp; [AI Design](#ai-features) &nbsp;•&nbsp; [Troubleshooting](#troubleshooting)
+
+> **Smart inventory management with AI forecasting, natural language assistant, and real-time reorder recommendations**
+
+
+
+[ Features](#features) · [ Getting Started](#getting-started) · [ AI Design](#ai-features) · [ Troubleshooting](#troubleshooting)
+
+
 
 </div>
-
 <br>
 
 ## Table of Contents
@@ -78,22 +84,21 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 > **Quick start:** `cp .env.example .env && docker compose up --build` — see [Getting Started](#getting-started) for the full walkthrough.
 
-<br>
 ## 📸 Screenshots
 
-> All screenshots live in `docs/screenshots/`
+> All screenshots live in `docs/screenshots/` and show both light and dark modes.
 
 ---
 
-## ☀️ Light Mode Screenshots
+##  Light Mode Screenshots
 
-### 1. 🏠 Home Page
+### 1.  Home Page
 
 ![Home Light](docs/screenshots/home.png)
 
 ---
 
-### 2. 📄 About Page
+### 2.  About Page
 
 ![About Light](docs/screenshots/about-light-part-1.png)
 
@@ -105,190 +110,200 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 4. ⚡ Features Page
+### 4.  Features Page
 
 ![Features Light](docs/screenshots/features.png)
 
 ---
 
-### 5. 💰 Pricing Page
+### 5.  Pricing Page
 
 ![Pricing Light](docs/screenshots/pricing-light.png)
 
 ---
 
-### 6. 📞 Contact Page
+### 6.  Contact Page
 
 ![Contact Light](docs/screenshots/contact-light.png)
 
 ---
 
-### 7. 🔐 Login Page
+### 7.  Login Page
 
 ![Login](docs/screenshots/login.png)
 
 ---
 
-### 8. 📝 Signup Page
+### 8.  Signup Page
 
 ![Signup](docs/screenshots/signup.png)
 
 ---
 
-### 9. 📊 Dashboard
+### 9.  Dashboard
 
 ![Dashboard Light](docs/screenshots/dashboard.png)
 
 ---
 
-### 10. 📦 Products Page
+### 10.  Products Page
 
 ![Products Light](docs/screenshots/products.png)
 
 ---
 
-### 11. 🏷️ Categories Page
+### 11.  Categories Page
 
 ![Categories Light](docs/screenshots/categories.png)
 
 ---
 
-### 12. 🏢 Suppliers Page
+### 12.  Suppliers Page
 
 ![Suppliers Light](docs/screenshots/suppliers.png)
 
 ---
 
-### 13. 📦 Inventory Page
+### 13.  Inventory Page
 
 ![Inventory Light](docs/screenshots/inventory.png)
 
 ---
 
-### 14. 🛒 Orders Page
+### 14.  Orders Page
 
 ![Orders Light](docs/screenshots/orders.png)
 
 ---
 
-### 15. 👥 Customers Page
+### 15.  Customers Page
 
 ![Customers Light](docs/screenshots/customers.png)
 
 ---
 
-### 16. 📊 Reports Page
+### 16.  Reports Page
 
 ![Reports Light](docs/screenshots/reports.png)
 
 ---
 
-### 17. 🤖 AI Assistant
+### 17.  AI Assistant
 
 ![AI Assistant Light](docs/screenshots/ai-assistant.png)
 
 ---
 
-### 18. 👤 Profile Page
+### 18.  Profile Page
 
 ![Profile Light](docs/screenshots/admin-profile-light.png)
 
 ---
 
-## 🌙 Dark Mode Screenshots
+### 19.  Footer Page
 
-### 1. 🏠 Home Page (Dark)
+![Footer Light](docs/screenshots/footer-light.png)
+
+---
+
+##  Dark Mode Screenshots
+
+### 1.  Home Page (Dark)
 
 ![Home Dark](docs/screenshots/home-dark.png)
 
 ---
 
-### 2. 📄 About Page (Dark)
+### 2.  About Page (Dark)
 
 ![About Dark](docs/screenshots/about-dark-part-1.png)
 
 ---
 
-### 3. 📄 About Page (Dark Continued)
+### 3.  About Page (Dark Continued)
 
-![About Dark 2](docs/screenshots/About-dark-part-2.png)
+![About Dark 2](docs/screenshots/about-dark-part-2.png)
 
 ---
 
-### 4. ⚡ Features Page (Dark)
+### 4.  Features Page (Dark)
 
 ![Features Dark](docs/screenshots/features-dark.png)
 
 ---
 
-### 5. 💰 Pricing Page (Dark)
+### 5.  Pricing Page (Dark)
 
 ![Pricing Dark](docs/screenshots/pricing-dark.png)
 
 ---
 
-### 6. 📞 Contact Page (Dark)
+### 6.  Contact Page (Dark)
 
 ![Contact Dark](docs/screenshots/contact-dark.png)
 
 ---
 
-### 7. 📊 Dashboard (Dark)
+### 7.  Dashboard (Dark)
 
 ![Dashboard Dark](docs/screenshots/dashboard-dark.png)
 
 ---
 
-### 8. 📦 Products Page (Dark)
+### 8.  Products Page (Dark)
 
 ![Products Dark](docs/screenshots/products-dark.png)
 
 ---
 
-### 9. 🏷️ Categories Page (Dark)
+### 9.  Categories Page (Dark)
 
 ![Categories Dark](docs/screenshots/categories-dark.png)
 
 ---
 
-### 10. 🏢 Suppliers Page (Dark)
+### 10.  Suppliers Page (Dark)
 
 ![Suppliers Dark](docs/screenshots/suppliers-dark.png)
 
 ---
 
-### 11. 📦 Inventory Page (Dark)
+### 11.  Inventory Page (Dark)
 
 ![Inventory Dark](docs/screenshots/inventory-dark.png)
 
 ---
 
-### 12. 🛒 Orders Page (Dark)
+### 12.  Orders Page (Dark)
 
 ![Orders Dark](docs/screenshots/orders-dark.png)
 
 ---
 
-### 13. 👥 Customers Page (Dark)
+### 13.  Customers Page (Dark)
 
 ![Customers Dark](docs/screenshots/customers-dark.png)
 
 ---
 
-### 14. 📊 Reports Page (Dark)
+### 14.  Reports Page (Dark)
 
 ![Reports Dark](docs/screenshots/reports-dark.png)
 
 ---
 
-### 15. 🤖 AI Assistant (Dark)
+### 15.  AI Assistant (Dark)
 
 ![AI Assistant Dark](docs/screenshots/ai-assistant-dark.png)
 
 ---
+
+### 16.  Footer Page (Dark)
+
+![Footer Dark](docs/screenshots/footer-dark.png)
+
 ---
 ---
->>>>>>> f7be8d2bccfd691cda53fd48ea6b515dfb6200e4
 ## Features
 
 ### Public marketing site
