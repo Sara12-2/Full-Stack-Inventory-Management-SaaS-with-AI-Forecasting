@@ -2,6 +2,15 @@
 
 **Inventory, order, and customer management for growing e-commerce teams — with AI-powered forecasting, a natural-language assistant, and smart reorder recommendations built in.**
 
+[![CI](https://github.com/Sara12-2/Full-Stack-Inventory-Management-SaaS-with-AI-Forecasting/actions/workflows/ci.yml/badge.svg)](https://github.com/Sara12-2/Full-Stack-Inventory-Management-SaaS-with-AI-Forecasting/actions/workflows/ci.yml)
+![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
+![Flask](https://img.shields.io/badge/Flask-3-000000?logo=flask)
+![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?logo=mysql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
+![Groq](https://img.shields.io/badge/AI-Groq-F55036)
+![License](https://img.shields.io/badge/license-proprietary-lightgrey)
+
 Built by [DevHatch Labs](#about-devhatch-labs).
 
 ---
@@ -222,6 +231,8 @@ docker compose up --build
 
 This starts MySQL, Redis, the Flask backend, the Next.js frontend, and Nginx together. Once healthy, the app is available at **http://localhost** (routed through Nginx).
 
+> The `mysql` container publishes to host port **3307**, not 3306 — this avoids colliding with a MySQL install already running on your machine (a common conflict on Windows/Mac dev boxes). Nothing else needs to change: the backend talks to MySQL over the internal Docker network (`mysql:3306`), never through the host port. Port 3307 only matters if you want to connect an external MySQL client (Workbench, DBeaver) to the containerized database.
+
 Seed sample data (run once, in a separate terminal, while the stack is up):
 ```bash
 docker compose exec backend python seed.py
@@ -386,6 +397,15 @@ See [AI Features](#ai-features) and [Environment Variables](#environment-variabl
 
 **Login/API calls intermittently fail with a connection error, even though the backend "is running"**
 Symptom: requests to `/api/...` randomly fail (`ERR_CONNECTION_REFUSED`) while the backend log shows repeated `Restarting with watchdog` / `Detected change in '...site-packages...'` lines. This is Flask's debug auto-reloader watching every installed package on disk and false-triggering a restart, which briefly drops the port mid-request. `backend/main.py` now runs with `use_reloader=False`, so this shouldn't recur — if you see it again, confirm that line wasn't reverted.
+
+**`docker compose up` fails on the `mysql` service: "ports are not available ... bind: Only one usage of each socket address"**
+Something else on your machine (often a local MySQL install/service) already has port 3306. This project's `docker-compose.yml` publishes MySQL on host port **3307** specifically to avoid this — if you're still hitting it, you likely have an old container or another service bound to the port in question; check with `netstat -ano | findstr :3306` (Windows) or `lsof -i :3306` (Mac/Linux) and stop whatever owns it, or change the host-side port in `docker-compose.yml` to something free.
+
+**Socket.IO fails with `RuntimeError: Redis requires a monkey patched socket library to work with eventlet`, and dashboard API calls start timing out (504) right after**
+Only happens when Redis is actually reachable (i.e. in Docker — local dev without Redis never hits this path). `flask-socketio` uses Redis as its cross-worker message queue when available, which requires `eventlet.monkey_patch()` to run before anything else imports `socket`. `backend/main.py` calls this as its very first line; if you see this error, something is importing a module before that patch runs (check nothing was added above it).
+
+**Dashboard/API calls all return `401 Unauthorized` after the backend has been restarted or rebuilt several times**
+Your browser's `localStorage` is holding a token from an earlier session that no longer matches the currently-running backend. Open DevTools → Application → Local Storage → delete `stockflow_token` and `stockflow_user`, then log in again for a fresh token.
 
 ## Deployment
 
