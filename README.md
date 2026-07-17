@@ -81,6 +81,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 <br>
 ## 📸 Screenshots
 
+<<<<<<< HEAD
 > All screenshots live in `docs/screenshots/` and show both light and dark modes.
 
 ---
@@ -220,6 +221,122 @@ The project also includes a public marketing site (home, features, pricing, abou
 | ![Profile](docs/screenshots/admin-profile-light.png) |
 
 ---
+=======
+> All screenshots live in `docs/screenshots/`
+
+---
+
+## ☀️ Light Mode Screenshots
+
+### 1. 🏠 Home Page
+
+![Home Light](docs/screenshots/home.png)
+
+---
+
+### 2. 📄 About Page
+
+![About Light](docs/screenshots/about-light-part-1.png)
+
+---
+
+### 3. 📄 About Page (Continued)
+
+![About Light 2](docs/screenshots/about-light-part-2.png)
+
+---
+
+### 4. ⚡ Features Page
+
+![Features Light](docs/screenshots/features.png)
+
+---
+
+### 5. 💰 Pricing Page
+
+![Pricing Light](docs/screenshots/pricing-light.png)
+
+---
+
+### 6. 📞 Contact Page
+
+![Contact Light](docs/screenshots/contact-light.png)
+
+---
+
+### 7. 🔐 Login Page
+
+![Login](docs/screenshots/login.png)
+
+---
+
+### 8. 📝 Signup Page
+
+![Signup](docs/screenshots/signup.png)
+
+---
+
+### 9. 📊 Dashboard
+
+![Dashboard Light](docs/screenshots/dashboard.png)
+
+---
+
+### 10. 📦 Products Page
+
+![Products Light](docs/screenshots/products.png)
+
+---
+
+### 11. 🏷️ Categories Page
+
+![Categories Light](docs/screenshots/categories.png)
+
+---
+
+### 12. 🏢 Suppliers Page
+
+![Suppliers Light](docs/screenshots/suppliers.png)
+
+---
+
+### 13. 📦 Inventory Page
+
+![Inventory Light](docs/screenshots/inventory.png)
+
+---
+
+### 14. 🛒 Orders Page
+
+![Orders Light](docs/screenshots/orders.png)
+
+---
+
+### 15. 👥 Customers Page
+
+![Customers Light](docs/screenshots/customers.png)
+
+---
+
+### 16. 📊 Reports Page
+
+![Reports Light](docs/screenshots/reports.png)
+
+---
+
+### 17. 🤖 AI Assistant
+
+![AI Assistant Light](docs/screenshots/ai-assistant.png)
+
+---
+
+### 18. 👤 Profile Page
+
+![Profile Light](docs/screenshots/admin-profile-light.png)
+
+---
+---
+>>>>>>> f7be8d2bccfd691cda53fd48ea6b515dfb6200e4
 ## Features
 
 ### Public marketing site
