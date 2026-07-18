@@ -90,17 +90,19 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-##  Light Mode Screenshots
-
-### 1.  Home Page
+### 1. 🏠 Home Page
 
 ![Home Light](docs/screenshots/home.png)
 
+![Home Dark](docs/screenshots/home-dark.png)
+
 ---
 
-### 2.  About Page
+### 2. 📄 About Page
 
 ![About Light](docs/screenshots/about-light-part-1.png)
+
+![About Dark](docs/screenshots/about-dark-part-1.png)
 
 ---
 
@@ -108,199 +110,185 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ![About Light 2](docs/screenshots/about-light-part-2.png)
 
----
-
-### 4.  Features Page
-
-![Features Light](docs/screenshots/features.png)
-
----
-
-### 5.  Pricing Page
-
-![Pricing Light](docs/screenshots/pricing-light.png)
-
----
-
-### 6.  Contact Page
-
-![Contact Light](docs/screenshots/contact-light.png)
-
----
-
-### 7.  Login Page
-
-![Login](docs/screenshots/login.png)
-
----
-
-### 8.  Signup Page
-
-![Signup](docs/screenshots/signup.png)
-
----
-
-### 9.  Dashboard
-
-![Dashboard Light](docs/screenshots/dashboard.png)
-
----
-
-### 10.  Products Page
-
-![Products Light](docs/screenshots/products.png)
-
----
-
-### 11.  Categories Page
-
-![Categories Light](docs/screenshots/categories.png)
-
----
-
-### 12.  Suppliers Page
-
-![Suppliers Light](docs/screenshots/suppliers.png)
-
----
-
-### 13.  Inventory Page
-
-![Inventory Light](docs/screenshots/inventory.png)
-
----
-
-### 14.  Orders Page
-
-![Orders Light](docs/screenshots/orders.png)
-
----
-
-### 15.  Customers Page
-
-![Customers Light](docs/screenshots/customers.png)
-
----
-
-### 16.  Reports Page
-
-![Reports Light](docs/screenshots/reports.png)
-
----
-
-### 17.  AI Assistant
-
-![AI Assistant Light](docs/screenshots/ai-assistant.png)
-
----
-
-### 18.  Profile Page
-
-![Profile Light](docs/screenshots/admin-profile-light.png)
-
----
-
-### 19.  Footer Page
-
-![Footer Light](docs/screenshots/footer-light.png)
-
----
-
-##  Dark Mode Screenshots
-
-### 1.  Home Page (Dark)
-
-![Home Dark](docs/screenshots/home-dark.png)
-
----
-
-### 2.  About Page (Dark)
-
-![About Dark](docs/screenshots/about-dark-part-1.png)
-
----
-
-### 3.  About Page (Dark Continued)
-
 ![About Dark 2](docs/screenshots/about-dark-part-2.png)
 
 ---
 
-### 4.  Features Page (Dark)
+### 4. ⚡ Features Page
+
+![Features Light](docs/screenshots/features.png)
 
 ![Features Dark](docs/screenshots/features-dark.png)
 
 ---
 
-### 5.  Pricing Page (Dark)
+### 5. 💰 Pricing Page
+
+![Pricing Light](docs/screenshots/pricing-light.png)
 
 ![Pricing Dark](docs/screenshots/pricing-dark.png)
 
 ---
 
-### 6.  Contact Page (Dark)
+### 6. 📞 Contact Page
+
+![Contact Light](docs/screenshots/contact-light.png)
 
 ![Contact Dark](docs/screenshots/contact-dark.png)
 
 ---
 
-### 7.  Dashboard (Dark)
+### 7. 🔐 Login Page
+
+![Login](docs/screenshots/login.png)
+
+---
+
+### 8. 📝 Signup Page
+
+![Signup](docs/screenshots/signup.png)
+
+---
+
+### 9. 📊 Dashboard
+
+![Dashboard Light](docs/screenshots/dashboard.png)
 
 ![Dashboard Dark](docs/screenshots/dashboard-dark.png)
 
 ---
 
-### 8.  Products Page (Dark)
+### 10. 📦 Products Page
+
+![Products Light](docs/screenshots/products.png)
 
 ![Products Dark](docs/screenshots/products-dark.png)
 
 ---
 
-### 9.  Categories Page (Dark)
+### 11. 🏷️ Categories Page
+
+![Categories Light](docs/screenshots/categories.png)
 
 ![Categories Dark](docs/screenshots/categories-dark.png)
 
 ---
 
-### 10.  Suppliers Page (Dark)
+### 12. 🏢 Suppliers Page
+
+![Suppliers Light](docs/screenshots/suppliers.png)
 
 ![Suppliers Dark](docs/screenshots/suppliers-dark.png)
 
 ---
 
-### 11.  Inventory Page (Dark)
+### 13. 📦 Inventory Page
+
+![Inventory Light](docs/screenshots/inventory.png)
 
 ![Inventory Dark](docs/screenshots/inventory-dark.png)
 
 ---
 
-### 12.  Orders Page (Dark)
+### 14. 🛒 Orders Page
+
+![Orders Light](docs/screenshots/orders.png)
 
 ![Orders Dark](docs/screenshots/orders-dark.png)
 
 ---
 
-### 13.  Customers Page (Dark)
+### 15. 👥 Customers Page
+
+![Customers Light](docs/screenshots/customers.png)
 
 ![Customers Dark](docs/screenshots/customers-dark.png)
 
 ---
 
-### 14.  Reports Page (Dark)
+### 16. 📊 Reports Page
+
+![Reports Light](docs/screenshots/reports.png)
 
 ![Reports Dark](docs/screenshots/reports-dark.png)
 
 ---
 
-### 15.  AI Assistant (Dark)
+### 17. 🤖 AI Assistant
+
+![AI Assistant Light](docs/screenshots/ai-assistant.png)
 
 ![AI Assistant Dark](docs/screenshots/ai-assistant-dark.png)
 
 ---
 
-### 16.  Footer Page (Dark)
+### 18. 👤 Profile Page
+
+![Profile Light](docs/screenshots/admin-profile-light.png)
+
+---
+
+### 19. 📱 Footer Page
+
+![Footer Light](docs/screenshots/footer-light.png)
 
 ![Footer Dark](docs/screenshots/footer-dark.png)
+
+---
+
+### 20. ➕ Add Product Page
+
+![Add Product](docs/screenshots/add-product.png)
+
+---
+
+### 21. 📝 New Order Page
+
+![New Order](docs/screenshots/new-order.png)
+
+---
+
+### 22. 📱 Responsiveness - Mobile View
+
+![Responsiveness 1](docs/screenshots/Responsiveness1.png)
+
+---
+
+### 23. 📱 Responsiveness - Mobile View 2
+
+![Responsiveness 2](docs/screenshots/responsiveness2.png)
+
+---
+
+### 24. 📱 Responsiveness - Mobile View 3
+
+![Responsiveness 3](docs/screenshots/responsiveness3.png)
+
+---
+
+### 25. 📱 Responsiveness - Mobile View 4
+
+![Responsiveness 4](docs/screenshots/responsiveness4.png)
+
+---
+
+### 26. 📱 Responsiveness - Mobile View 5
+
+![Responsiveness 5](docs/screenshots/responsiveness5.png)
+
+---
+
+### 27. 📱 Responsiveness - Mobile View 6
+
+![Responsiveness 6](docs/screenshots/responsiveness6.png)
+
+---
+
+### 28. 📱 Responsiveness - Mobile View 7
+
+![Responsiveness 7](docs/screenshots/responsiveness7.png)
+
+---
 
 ---
 ---
