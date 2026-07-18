@@ -13,6 +13,8 @@
 | Predict demand with AI | Live inventory insights | Smart reorder points | Natural language queries |
 
 ---
+🔗 **Direct Link:** [StockFlow AI Demo Video](https://drive.google.com/file/d/1HHUJQYC6oSzfxB-GVjuexE-uqA_HF_8g/view?usp=sharing)
+---
 
 [![CI](https://github.com/Sara12-2/Full-Stack-Inventory-Management-SaaS-with-AI-Forecasting/actions/workflows/ci.yml/badge.svg)](https://github.com/Sara12-2/Full-Stack-Inventory-Management-SaaS-with-AI-Forecasting/actions/workflows/ci.yml)
 ![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)
