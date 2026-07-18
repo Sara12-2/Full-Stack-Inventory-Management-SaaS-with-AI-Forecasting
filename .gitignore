@@ -170,4 +170,4 @@ workbox-*.js
 .nyc_output
 
 # PNPM
-.pnpm-store/
+.pnpm-store/"replace.txt" 
