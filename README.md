@@ -1,10 +1,18 @@
 <div align="center">
 
-# <img src="https://img.icons8.com/color/48/000000/artificial-intelligence.png" width="40" height="40" style="vertical-align: middle;"/> StockFlow AI
+![StockFlow AI Banner](https://img.shields.io/badge/%20StockFlow%20AI-Powered%20Inventory%20Management-blue?style=for-the-badge&logo=artificial-intelligence&logoColor=white)
 
-###  AI-Powered Inventory Management for Modern E-Commerce Teams
+# **StockFlow AI** 
 
-**Inventory · Orders · Customers · Forecasting · Assistant · Reorder Intelligence**
+### *Enterprise-Grade Inventory Management Powered by Artificial Intelligence*
+
+---
+
+|  AI Forecasting |  Real-Time Analytics |  Auto Reorder |  AI Assistant |
+|:---:|:---:|:---:|:---:|
+| Predict demand with AI | Live inventory insights | Smart reorder points | Natural language queries |
+
+---
 
 [![CI](https://github.com/Sara12-2/Full-Stack-Inventory-Management-SaaS-with-AI-Forecasting/actions/workflows/ci.yml/badge.svg)](https://github.com/Sara12-2/Full-Stack-Inventory-Management-SaaS-with-AI-Forecasting/actions/workflows/ci.yml)
 ![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)
@@ -16,57 +24,17 @@
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Groq](https://img.shields.io/badge/AI-Groq-F55036?style=for-the-badge)
 
+---
 
-> **Smart inventory management with AI forecasting, natural language assistant, and real-time reorder recommendations**
+[ Features](#features) · [ Getting Started](#getting-started) · [ AI Design](#ai-features) · [ Troubleshooting](#troubleshooting) · [Screenshots](#screenshots)
 
-
-
-[ Features](#features) · [ Getting Started](#getting-started) · [ AI Design](#ai-features) · [ Troubleshooting](#troubleshooting)
-
-
-
-</div>
 <br>
 
-## Table of Contents
+<div align="center">
+  <sub>Built  by <a href="#about-devhatch-labs">DevHatch Labs</a></sub>
+</div>
 
-<table>
-<tr>
-<td valign="top">
-
-**The project**
-- [Overview](#overview)
-- [Screenshots](#screenshots)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Architecture](#architecture)
-- [Project Structure](#project-structure)
-
-</td>
-<td valign="top">
-
-**Running it**
-- [Getting Started](#getting-started)
-- [Environment Variables](#environment-variables)
-- [Database & Seed Data](#database--seed-data)
-- [Testing](#testing)
-- [CI/CD](#cicd)
-- [Troubleshooting](#troubleshooting)
-
-</td>
-<td valign="top">
-
-**Reference**
-- [API Overview](#api-overview)
-- [Real-Time Alerts](#real-time-alerts)
-- [AI Features](#ai-features)
-- [Deployment](#deployment)
-- [Build Roadmap](#build-roadmap)
-- [About DevHatch Labs](#about-devhatch-labs)
-
-</td>
-</tr>
-</table>
+</div>
 
 <br>
 
@@ -90,7 +58,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 1. 🏠 Home Page
+### 1.  Home Page
 
 ![Home Light](docs/screenshots/home.png)
 
@@ -98,7 +66,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 2. 📄 About Page
+### 2.  About Page
 
 ![About Light](docs/screenshots/about-light-part-1.png)
 
@@ -106,7 +74,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 3. 📄 About Page (Continued)
+### 3.  About Page (Continued)
 
 ![About Light 2](docs/screenshots/about-light-part-2.png)
 
@@ -114,7 +82,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 4. ⚡ Features Page
+### 4.  Features Page
 
 ![Features Light](docs/screenshots/features.png)
 
@@ -122,7 +90,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 5. 💰 Pricing Page
+### 5.  Pricing Page
 
 ![Pricing Light](docs/screenshots/pricing-light.png)
 
@@ -130,7 +98,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 6. 📞 Contact Page
+### 6.  Contact Page
 
 ![Contact Light](docs/screenshots/contact-light.png)
 
@@ -138,19 +106,19 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 7. 🔐 Login Page
+### 7.  Login Page
 
 ![Login](docs/screenshots/login.png)
 
 ---
 
-### 8. 📝 Signup Page
+### 8.  Signup Page
 
 ![Signup](docs/screenshots/signup.png)
 
 ---
 
-### 9. 📊 Dashboard
+### 9. Dashboard
 
 ![Dashboard Light](docs/screenshots/dashboard.png)
 
@@ -158,7 +126,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 10. 📦 Products Page
+### 10.  Products Page
 
 ![Products Light](docs/screenshots/products.png)
 
@@ -166,7 +134,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 11. 🏷️ Categories Page
+### 11.  Categories Page
 
 ![Categories Light](docs/screenshots/categories.png)
 
@@ -174,7 +142,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 12. 🏢 Suppliers Page
+### 12.  Suppliers Page
 
 ![Suppliers Light](docs/screenshots/suppliers.png)
 
@@ -182,7 +150,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 13. 📦 Inventory Page
+### 13.  Inventory Page
 
 ![Inventory Light](docs/screenshots/inventory.png)
 
@@ -190,7 +158,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 14. 🛒 Orders Page
+### 14.  Orders Page
 
 ![Orders Light](docs/screenshots/orders.png)
 
@@ -206,7 +174,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 16. 📊 Reports Page
+### 16.  Reports Page
 
 ![Reports Light](docs/screenshots/reports.png)
 
@@ -214,7 +182,7 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 17. 🤖 AI Assistant
+### 17.  AI Assistant
 
 ![AI Assistant Light](docs/screenshots/ai-assistant.png)
 
@@ -222,13 +190,13 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 18. 👤 Profile Page
+### 18.  Profile Page
 
 ![Profile Light](docs/screenshots/admin-profile-light.png)
 
 ---
 
-### 19. 📱 Footer Page
+### 19. Footer Page
 
 ![Footer Light](docs/screenshots/footer-light.png)
 
@@ -236,55 +204,55 @@ The project also includes a public marketing site (home, features, pricing, abou
 
 ---
 
-### 20. ➕ Add Product Page
+### 20.  Add Product Page
 
 ![Add Product](docs/screenshots/add-product.png)
 
 ---
 
-### 21. 📝 New Order Page
+### 21.  New Order Page
 
 ![New Order](docs/screenshots/new-order.png)
 
 ---
 
-### 22. 📱 Responsiveness - Mobile View
+### 22.  Responsiveness - Mobile View
 
 ![Responsiveness 1](docs/screenshots/Responsiveness1.png)
 
 ---
 
-### 23. 📱 Responsiveness - Mobile View 2
+### 23.  Responsiveness - Mobile View 2
 
 ![Responsiveness 2](docs/screenshots/responsiveness2.png)
 
 ---
 
-### 24. 📱 Responsiveness - Mobile View 3
+### 24.  Responsiveness - Mobile View 3
 
 ![Responsiveness 3](docs/screenshots/responsiveness3.png)
 
 ---
 
-### 25. 📱 Responsiveness - Mobile View 4
+### 25.  Responsiveness - Mobile View 4
 
 ![Responsiveness 4](docs/screenshots/responsiveness4.png)
 
 ---
 
-### 26. 📱 Responsiveness - Mobile View 5
+### 26.  Responsiveness - Mobile View 5
 
 ![Responsiveness 5](docs/screenshots/responsiveness5.png)
 
 ---
 
-### 27. 📱 Responsiveness - Mobile View 6
+### 27.  Responsiveness - Mobile View 6
 
 ![Responsiveness 6](docs/screenshots/responsiveness6.png)
 
 ---
 
-### 28. 📱 Responsiveness - Mobile View 7
+### 28.  Responsiveness - Mobile View 7
 
 ![Responsiveness 7](docs/screenshots/responsiveness7.png)
 
